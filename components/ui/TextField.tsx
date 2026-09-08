@@ -1,4 +1,5 @@
 import type { UseFormRegisterReturn } from "react-hook-form";
+import { useLanguage } from "@/i18n/LanguageContext";
 
 type TextFieldProps = {
   label: string;
@@ -17,11 +18,12 @@ export function TextField({
   type = "text",
   optional,
 }: TextFieldProps) {
+  const { t } = useLanguage();
   return (
     <div className="flex flex-col gap-2">
       <label htmlFor={registration.name} className="font-sans text-sm font-medium text-charcoal">
         {label}
-        {optional && <span className="font-normal text-sage"> (optional)</span>}
+        {optional && <span className="font-normal text-sage"> {t.common.optional}</span>}
       </label>
       <input
         id={registration.name}
@@ -45,11 +47,12 @@ export function TextAreaField({
   optional,
   rows = 4,
 }: TextAreaFieldProps) {
+  const { t } = useLanguage();
   return (
     <div className="flex flex-col gap-2">
       <label htmlFor={registration.name} className="font-sans text-sm font-medium text-charcoal">
         {label}
-        {optional && <span className="font-normal text-sage"> (optional)</span>}
+        {optional && <span className="font-normal text-sage"> {t.common.optional}</span>}
       </label>
       <textarea
         id={registration.name}

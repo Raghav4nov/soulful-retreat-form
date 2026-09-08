@@ -1,3 +1,5 @@
+import { useLanguage } from "@/i18n/LanguageContext";
+
 type StepNavProps = {
   onBack?: () => void;
   onNext: () => void;
@@ -5,7 +7,9 @@ type StepNavProps = {
   showBack?: boolean;
 };
 
-export function StepNav({ onBack, onNext, nextLabel = "Continue", showBack = true }: StepNavProps) {
+export function StepNav({ onBack, onNext, nextLabel, showBack = true }: StepNavProps) {
+  const { t } = useLanguage();
+
   return (
     <div className="mt-10 flex items-center justify-between gap-4">
       {showBack ? (
@@ -28,7 +32,7 @@ export function StepNav({ onBack, onNext, nextLabel = "Continue", showBack = tru
             <path d="M19 12H5" />
             <path d="M11 18L5 12L11 6" />
           </svg>
-          Back
+          {t.common.back}
         </button>
       ) : (
         <span />
@@ -38,7 +42,7 @@ export function StepNav({ onBack, onNext, nextLabel = "Continue", showBack = tru
         onClick={onNext}
         className="rounded-full bg-forest px-8 py-4 font-sans text-sm font-semibold uppercase tracking-wide text-ivory transition-transform hover:scale-[1.02] active:scale-[0.98]"
       >
-        {nextLabel}
+        {nextLabel ?? t.common.continue}
       </button>
     </div>
   );

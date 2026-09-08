@@ -1,10 +1,11 @@
 import { Controller, useFormContext } from "react-hook-form";
 import type { FormValues } from "@/schema/formSchema";
-import { RELATIONSHIP_OPTIONS } from "@/schema/options";
+import { RELATIONSHIP_OPTIONS, localizeOptions } from "@/schema/options";
 import { PillGroup } from "@/components/ui/PillGroup";
 import { TextField, TextAreaField } from "@/components/ui/TextField";
 import { StepHeading, StepIntro } from "@/components/ui/StepHeading";
 import { StepNav } from "@/components/ui/StepNav";
+import { useLanguage } from "@/i18n/LanguageContext";
 
 type Step7EmergencyProps = {
   onNext: () => void;
@@ -17,25 +18,23 @@ export default function Step7Emergency({ onNext, onBack }: Step7EmergencyProps) 
     register,
     formState: { errors },
   } = useFormContext<FormValues>();
+  const { t, locale } = useLanguage();
 
   return (
     <div>
-      <StepHeading>Just For Your Safety</StepHeading>
-      <StepIntro>
-        We ask for these details only so our team can support you appropriately
-        during the retreat.
-      </StepIntro>
+      <StepHeading>{t.step7.heading}</StepHeading>
+      <StepIntro>{t.step7.intro}</StepIntro>
       <div className="mt-8 flex flex-col gap-8">
         <div className="flex flex-col gap-6">
           <TextField
-            label="Emergency contact name"
-            placeholder="Full name"
+            label={t.step7.contactNameLabel}
+            placeholder={t.step7.contactNamePlaceholder}
             registration={register("emergencyContactName")}
             error={errors.emergencyContactName?.message}
           />
           <TextField
-            label="Emergency contact number"
-            placeholder="e.g. +91 98765 43210"
+            label={t.step7.contactNumberLabel}
+            placeholder={t.step7.contactNumberPlaceholder}
             type="tel"
             registration={register("emergencyContactNumber")}
             error={errors.emergencyContactNumber?.message}
@@ -47,8 +46,8 @@ export default function Step7Emergency({ onNext, onBack }: Step7EmergencyProps) 
           control={control}
           render={({ field }) => (
             <PillGroup
-              label="Relationship with emergency contact"
-              options={RELATIONSHIP_OPTIONS}
+              label={t.step7.relationshipLabel}
+              options={localizeOptions(RELATIONSHIP_OPTIONS, locale)}
               value={field.value}
               onChange={field.onChange}
               error={errors.emergencyRelationship?.message}
@@ -57,8 +56,8 @@ export default function Step7Emergency({ onNext, onBack }: Step7EmergencyProps) 
         />
 
         <TextAreaField
-          label="Is there anything our retreat team should be aware of regarding your participation in physical, outdoor or nature-based activities?"
-          placeholder="Share anything relevant to your safety and comfort"
+          label={t.step7.activityNotesLabel}
+          placeholder={t.step7.activityNotesPlaceholder}
           registration={register("activityNotes")}
           optional
         />
