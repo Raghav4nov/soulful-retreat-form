@@ -97,6 +97,7 @@ export interface TranslationDict {
   step10: {
     heading: string;
     thankYou: (name: string) => string;
+    guestFallback: string;
     receivedPrefix: string;
     quote: string;
     steps: StepInfo[];
@@ -210,6 +211,7 @@ const en: TranslationDict = {
   step10: {
     heading: "Welcome To The Journey",
     thankYou: (name) => `Thank you, ${name}.`,
+    guestFallback: "Guest",
     receivedPrefix: "We've received your registration for:",
     quote: "Same you. But a kinder, calmer, brighter version.",
     steps: [
@@ -344,6 +346,7 @@ const hi: TranslationDict = {
   step10: {
     heading: "यात्रा में आपका स्वागत है",
     thankYou: (name) => `धन्यवाद, ${name}।`,
+    guestFallback: "अतिथि",
     receivedPrefix: "हमें आपका पंजीकरण मिल गया है:",
     quote: "वही आप। बस एक अधिक दयालु, शांत और उज्जवल संस्करण।",
     steps: [

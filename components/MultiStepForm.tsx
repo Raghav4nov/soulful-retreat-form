@@ -40,15 +40,19 @@ const stepFieldMap: Record<number, (keyof FormValues)[]> = {
   10: [],
 };
 
-export default function MultiStepForm() {
+type MultiStepFormProps = {
+  testMode?: boolean;
+};
+
+export default function MultiStepForm({ testMode = false }: MultiStepFormProps) {
   return (
     <LanguageProvider>
-      <MultiStepFormInner />
+      <MultiStepFormInner testMode={testMode} />
     </LanguageProvider>
   );
 }
 
-function MultiStepFormInner() {
+function MultiStepFormInner({ testMode }: { testMode: boolean }) {
   const [step, setStep] = useState(1);
   const { t, locale } = useLanguage();
 
@@ -74,7 +78,7 @@ function MultiStepFormInner() {
 
   const goNext = async () => {
     const fields = stepFieldMap[step];
-    const isValid = fields.length ? await trigger(fields) : true;
+    const isValid = testMode || (fields.length ? await trigger(fields) : true);
     if (!isValid) return;
 
     if (step === 8) {
@@ -106,6 +110,12 @@ function MultiStepFormInner() {
       <div className="relative flex min-h-screen w-full flex-col items-center justify-center px-4 py-10 sm:py-16">
         <BackgroundDecor />
         <div className="relative z-10 w-full max-w-xl">
+          {testMode && (
+            <div className="mb-4 rounded-full bg-charcoal px-4 py-2 text-center font-sans text-xs font-semibold uppercase tracking-wide text-ivory">
+              Test mode — validation skipped, click Continue freely
+            </div>
+          )}
+
           <h1 className="font-playfair mb-4 text-center text-3xl text-forest sm:text-4xl">
             {t.common.appTitle}
           </h1>
