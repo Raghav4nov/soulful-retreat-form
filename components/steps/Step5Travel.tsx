@@ -5,11 +5,13 @@ import {
   TRAVEL_MODE_OPTIONS,
   TRAVEL_GUIDANCE_OPTIONS,
   ACCOMMODATION_OPTIONS,
+  localizeOptions,
 } from "@/schema/options";
 import { PillGroup } from "@/components/ui/PillGroup";
 import { TextField } from "@/components/ui/TextField";
 import { StepHeading } from "@/components/ui/StepHeading";
 import { StepNav } from "@/components/ui/StepNav";
+import { useLanguage } from "@/i18n/LanguageContext";
 
 type Step5TravelProps = {
   onNext: () => void;
@@ -23,20 +25,21 @@ export default function Step5Travel({ onNext, onBack }: Step5TravelProps) {
     watch,
     formState: { errors },
   } = useFormContext<FormValues>();
+  const { t, locale } = useLanguage();
 
   const travellingFromOutside = watch("travellingFromOutside");
 
   return (
     <div>
-      <StepHeading>Your Journey To Rishikesh</StepHeading>
+      <StepHeading>{t.step5.heading}</StepHeading>
       <div className="mt-8 flex flex-col gap-8">
         <Controller
           name="travellingFromOutside"
           control={control}
           render={({ field }) => (
             <PillGroup
-              label="Are you travelling from outside Rishikesh?"
-              options={YES_NO_OPTIONS}
+              label={t.step5.travellingFromOutsideQuestion}
+              options={localizeOptions(YES_NO_OPTIONS, locale)}
               value={field.value}
               onChange={field.onChange}
               error={errors.travellingFromOutside?.message}
@@ -51,8 +54,8 @@ export default function Step5Travel({ onNext, onBack }: Step5TravelProps) {
               control={control}
               render={({ field }) => (
                 <PillGroup
-                  label="How will you be reaching Rishikesh?"
-                  options={TRAVEL_MODE_OPTIONS}
+                  label={t.step5.travelModeQuestion}
+                  options={localizeOptions(TRAVEL_MODE_OPTIONS, locale)}
                   value={field.value ?? ""}
                   onChange={field.onChange}
                   error={errors.travelMode?.message}
@@ -64,8 +67,8 @@ export default function Step5Travel({ onNext, onBack }: Step5TravelProps) {
               control={control}
               render={({ field }) => (
                 <PillGroup
-                  label="Would you like guidance regarding reaching the retreat location?"
-                  options={TRAVEL_GUIDANCE_OPTIONS}
+                  label={t.step5.travelGuidanceQuestion}
+                  options={localizeOptions(TRAVEL_GUIDANCE_OPTIONS, locale)}
                   value={field.value ?? ""}
                   onChange={field.onChange}
                   error={errors.travelGuidance?.message}
@@ -80,8 +83,8 @@ export default function Step5Travel({ onNext, onBack }: Step5TravelProps) {
           control={control}
           render={({ field }) => (
             <PillGroup
-              label="Accommodation preference"
-              options={ACCOMMODATION_OPTIONS}
+              label={t.step5.accommodationLabel}
+              options={localizeOptions(ACCOMMODATION_OPTIONS, locale)}
               value={field.value}
               onChange={field.onChange}
               error={errors.accommodationPreference?.message}
@@ -90,8 +93,8 @@ export default function Step5Travel({ onNext, onBack }: Step5TravelProps) {
         />
 
         <TextField
-          label="If you're coming with someone, please mention their name"
-          placeholder="Companion's name"
+          label={t.step5.companionLabel}
+          placeholder={t.step5.companionPlaceholder}
           registration={register("companionName")}
           optional
         />

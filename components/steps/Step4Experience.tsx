@@ -1,10 +1,11 @@
 import { Controller, useFormContext } from "react-hook-form";
 import type { FormValues } from "@/schema/formSchema";
-import { EXPERIENCE_TYPE_OPTIONS, OUTDOOR_COMFORT_OPTIONS } from "@/schema/options";
+import { EXPERIENCE_TYPE_OPTIONS, OUTDOOR_COMFORT_OPTIONS, localizeOptions } from "@/schema/options";
 import { PillGroup } from "@/components/ui/PillGroup";
 import { TextAreaField } from "@/components/ui/TextField";
 import { StepHeading } from "@/components/ui/StepHeading";
 import { StepNav } from "@/components/ui/StepNav";
+import { useLanguage } from "@/i18n/LanguageContext";
 
 type Step4ExperienceProps = {
   onNext: () => void;
@@ -17,18 +18,19 @@ export default function Step4Experience({ onNext, onBack }: Step4ExperienceProps
     register,
     formState: { errors },
   } = useFormContext<FormValues>();
+  const { t, locale } = useLanguage();
 
   return (
     <div>
-      <StepHeading>How Would You Like To Experience The Retreat?</StepHeading>
+      <StepHeading>{t.step4.heading}</StepHeading>
       <div className="mt-8 flex flex-col gap-8">
         <Controller
           name="experienceType"
           control={control}
           render={({ field }) => (
             <PillGroup
-              label="What kind of experience are you looking for?"
-              options={EXPERIENCE_TYPE_OPTIONS}
+              label={t.step4.experienceTypeQuestion}
+              options={localizeOptions(EXPERIENCE_TYPE_OPTIONS, locale)}
               value={field.value}
               onChange={field.onChange}
               error={errors.experienceType?.message}
@@ -40,8 +42,8 @@ export default function Step4Experience({ onNext, onBack }: Step4ExperienceProps
           control={control}
           render={({ field }) => (
             <PillGroup
-              label="Are you comfortable participating in outdoor/nature-based activities?"
-              options={OUTDOOR_COMFORT_OPTIONS}
+              label={t.step4.outdoorComfortQuestion}
+              options={localizeOptions(OUTDOOR_COMFORT_OPTIONS, locale)}
               value={field.value}
               onChange={field.onChange}
               error={errors.outdoorComfort?.message}
@@ -49,8 +51,8 @@ export default function Step4Experience({ onNext, onBack }: Step4ExperienceProps
           )}
         />
         <TextAreaField
-          label="Is there anything you'd particularly like our team to arrange or keep in mind to make your retreat experience more comfortable?"
-          placeholder="Share anything that would help us take care of you"
+          label={t.step4.specialRequestsLabel}
+          placeholder={t.step4.specialRequestsPlaceholder}
           registration={register("specialRequests")}
           optional
         />

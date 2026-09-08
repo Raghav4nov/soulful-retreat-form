@@ -1,13 +1,17 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { FormProvider, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { AnimatePresence } from "framer-motion";
 
-import { formSchema, defaultValues, type FormValues } from "@/schema/formSchema";
+import { createFormSchema, defaultValues, type FormValues } from "@/schema/formSchema";
 import AnimatedStep from "@/components/AnimatedStep";
 import BackgroundDecor from "@/components/ui/BackgroundDecor";
+import { LanguageToggle } from "@/components/ui/LanguageToggle";
+import { LanguageProvider, useLanguage } from "@/i18n/LanguageContext";
+import { translations } from "@/i18n/translations";
+import type { Locale } from "@/i18n/types";
 
 import Step1Welcome from "@/components/steps/Step1Welcome";
 import Step2About from "@/components/steps/Step2About";
@@ -37,10 +41,27 @@ const stepFieldMap: Record<number, (keyof FormValues)[]> = {
 };
 
 export default function MultiStepForm() {
+  return (
+    <LanguageProvider>
+      <MultiStepFormInner />
+    </LanguageProvider>
+  );
+}
+
+function MultiStepFormInner() {
   const [step, setStep] = useState(1);
+  const { t, locale } = useLanguage();
+
+  const localeRef = useRef<Locale>("en");
+  useEffect(() => {
+    localeRef.current = locale;
+  }, [locale]);
 
   const methods = useForm<FormValues>({
-    resolver: zodResolver(formSchema),
+    resolver: (values, context, options) => {
+      const schema = createFormSchema(translations[localeRef.current].validation);
+      return zodResolver(schema)(values, context, options);
+    },
     defaultValues,
     mode: "onSubmit",
   });
@@ -85,12 +106,14 @@ export default function MultiStepForm() {
       <div className="relative flex min-h-screen w-full flex-col items-center justify-center px-4 py-10 sm:py-16">
         <BackgroundDecor />
         <div className="relative z-10 w-full max-w-xl">
+          <div className="mb-4 flex justify-end">
+            <LanguageToggle />
+          </div>
+
           {showProgress && (
             <div className="mb-8">
               <div className="mb-2 flex justify-between font-sans text-xs text-charcoal/60">
-                <span>
-                  Step {progressStep} of {FORM_STEP_COUNT}
-                </span>
+                <span>{t.common.formatStep(progressStep, FORM_STEP_COUNT)}</span>
                 <span>{Math.round((progressStep / FORM_STEP_COUNT) * 100)}%</span>
               </div>
               <div className="h-1.5 w-full rounded-full bg-sage/30">

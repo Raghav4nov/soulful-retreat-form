@@ -1,9 +1,9 @@
-import type { Option } from "@/schema/options";
+import type { LocalizedOption } from "@/schema/options";
 import Pill from "./Pill";
 
 type PillGroupProps = {
   label: string;
-  options: Option[];
+  options: LocalizedOption[];
   value: string;
   onChange: (value: string) => void;
   error?: string;
@@ -31,7 +31,7 @@ export function PillGroup({ label, options, value, onChange, error, columns = 2 
 
 type PillMultiGroupProps = {
   label: string;
-  options: Option[];
+  options: LocalizedOption[];
   value: string[];
   onChange: (value: string[]) => void;
   error?: string;
