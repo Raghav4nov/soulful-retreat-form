@@ -13,7 +13,9 @@ export default function Step10Confirmation() {
         {t.step10.heading}
       </h2>
 
-      <p className="mt-4 font-sans text-lg text-charcoal">{t.step10.thankYou(fullName || "")}</p>
+      <p className="mt-4 font-sans text-lg text-charcoal">
+        {t.step10.thankYou(fullName || t.step10.guestFallback)}
+      </p>
       <p className="mt-2 max-w-md font-sans text-sm leading-relaxed text-charcoal/70 sm:text-base">
         {t.step10.receivedPrefix} {t.brand.name} · {t.brand.dateLocation}
       </p>
