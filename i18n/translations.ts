@@ -5,6 +5,7 @@ type StepInfo = { title: string; description: string };
 
 export interface TranslationDict {
   common: {
+    appTitle: string;
     back: string;
     continue: string;
     optional: string;
@@ -106,6 +107,7 @@ export interface TranslationDict {
 
 const en: TranslationDict = {
   common: {
+    appTitle: "Retreat Program Registration",
     back: "Back",
     continue: "Continue",
     optional: "(optional)",
@@ -239,6 +241,7 @@ const en: TranslationDict = {
 
 const hi: TranslationDict = {
   common: {
+    appTitle: "रिट्रीट कार्यक्रम पंजीकरण",
     back: "पीछे",
     continue: "जारी रखें",
     optional: "(वैकल्पिक)",
