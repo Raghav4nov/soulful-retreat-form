@@ -2,7 +2,11 @@ import { useFormContext } from "react-hook-form";
 import type { FormValues } from "@/schema/formSchema";
 import { useLanguage } from "@/i18n/LanguageContext";
 
-export default function Step10Confirmation() {
+type Step10ConfirmationProps = {
+  submissionError?: boolean;
+};
+
+export default function Step10Confirmation({ submissionError }: Step10ConfirmationProps) {
   const { watch } = useFormContext<FormValues>();
   const { t } = useLanguage();
   const fullName = watch("fullName");
@@ -19,6 +23,12 @@ export default function Step10Confirmation() {
       <p className="mt-2 max-w-md font-sans text-sm leading-relaxed text-charcoal/70 sm:text-base">
         {t.step10.receivedPrefix} {t.brand.name} · {t.brand.dateLocation}
       </p>
+
+      {submissionError && (
+        <p className="mt-4 max-w-md rounded-2xl border border-red-300 bg-red-50 px-4 py-3 font-sans text-sm text-red-700">
+          {t.step10.submissionErrorNotice}
+        </p>
+      )}
 
       <p className="font-cormorant mt-6 text-xl italic text-sage sm:text-2xl">{t.step10.quote}</p>
 
