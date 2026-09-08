@@ -7,6 +7,7 @@ import { AnimatePresence } from "framer-motion";
 
 import { formSchema, defaultValues, type FormValues } from "@/schema/formSchema";
 import AnimatedStep from "@/components/AnimatedStep";
+import BackgroundDecor from "@/components/ui/BackgroundDecor";
 
 import Step1Welcome from "@/components/steps/Step1Welcome";
 import Step2About from "@/components/steps/Step2About";
@@ -81,8 +82,9 @@ export default function MultiStepForm() {
 
   return (
     <FormProvider {...methods}>
-      <div className="flex min-h-screen w-full flex-col items-center justify-center px-4 py-10 sm:py-16">
-        <div className="w-full max-w-xl">
+      <div className="relative flex min-h-screen w-full flex-col items-center justify-center px-4 py-10 sm:py-16">
+        <BackgroundDecor />
+        <div className="relative z-10 w-full max-w-xl">
           {showProgress && (
             <div className="mb-8">
               <div className="mb-2 flex justify-between font-sans text-xs text-charcoal/60">
