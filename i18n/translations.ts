@@ -107,7 +107,7 @@ export interface TranslationDict {
 
 const en: TranslationDict = {
   common: {
-    appTitle: "Retreat Program Registration",
+    appTitle: "Registration",
     back: "Back",
     continue: "Continue",
     optional: "(optional)",
@@ -241,7 +241,7 @@ const en: TranslationDict = {
 
 const hi: TranslationDict = {
   common: {
-    appTitle: "रिट्रीट कार्यक्रम पंजीकरण",
+    appTitle: "पंजीकरण",
     back: "पीछे",
     continue: "जारी रखें",
     optional: "(वैकल्पिक)",

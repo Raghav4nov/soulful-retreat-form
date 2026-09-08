@@ -106,7 +106,7 @@ function MultiStepFormInner() {
       <div className="relative flex min-h-screen w-full flex-col items-center justify-center px-4 py-10 sm:py-16">
         <BackgroundDecor />
         <div className="relative z-10 w-full max-w-xl">
-          <h1 className="font-playfair mb-4 text-center text-lg text-forest sm:text-xl">
+          <h1 className="font-playfair mb-4 text-center text-3xl text-forest sm:text-4xl">
             {t.common.appTitle}
           </h1>
 
