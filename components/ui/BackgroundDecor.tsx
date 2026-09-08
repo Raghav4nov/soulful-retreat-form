@@ -73,60 +73,116 @@ function Waves() {
   );
 }
 
+function Spiral() {
+  return (
+    <svg viewBox="0 0 64 64" fill="none" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round">
+      <path d="M32 32C32 28 35 26 38 27C42 28 44 32 42 36C40 41 34 43 29 40C23 37 21 30 25 24C29 18 38 16 45 21C53 26 56 36 51 45" />
+    </svg>
+  );
+}
+
+function Feather() {
+  return (
+    <svg viewBox="0 0 64 64" fill="none" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round">
+      <path d="M46 8C30 8 16 22 16 42C16 48 18 52 18 52" />
+      <path d="M42 12L18 36" />
+      <path d="M38 16L22 32" />
+      <path d="M34 20L26 28" />
+      <path d="M12 56L20 48" />
+    </svg>
+  );
+}
+
 const ICONS: IconDef[] = [
   {
     icon: <Leaf />,
     className: "top-[8%] left-[6%] text-sage/40",
     size: 48,
-    duration: 14,
+    duration: 6,
     delay: 0,
-    yRange: 12,
+    yRange: 16,
     rotateRange: 6,
   },
   {
     icon: <Sun />,
     className: "top-[10%] right-[8%] text-forest/25 hidden sm:block",
     size: 60,
-    duration: 18,
-    delay: 1,
-    yRange: 10,
+    duration: 7,
+    delay: 0.4,
+    yRange: 14,
     rotateRange: 4,
+  },
+  {
+    icon: <Feather />,
+    className: "top-[22%] left-[22%] text-sage/30 hidden lg:block",
+    size: 46,
+    duration: 8,
+    delay: 1,
+    yRange: 12,
+    rotateRange: 5,
   },
   {
     icon: <Yogi />,
     className: "top-[42%] left-[4%] text-forest/20 hidden lg:block",
     size: 64,
-    duration: 16,
+    duration: 7.5,
     delay: 0.5,
-    yRange: 14,
+    yRange: 16,
     rotateRange: 3,
+  },
+  {
+    icon: <Spiral />,
+    className: "top-[30%] right-[22%] text-forest/20 hidden lg:block",
+    size: 44,
+    duration: 6.5,
+    delay: 1.6,
+    yRange: 10,
+    rotateRange: 8,
   },
   {
     icon: <Waves />,
     className: "top-[55%] right-[6%] text-sage/40 hidden sm:block",
     size: 56,
-    duration: 12,
+    duration: 5.5,
     delay: 0.8,
-    yRange: 8,
+    yRange: 10,
     rotateRange: 0,
   },
   {
     icon: <Mountain />,
     className: "bottom-[12%] left-[8%] text-sage/40 hidden sm:block",
     size: 58,
-    duration: 20,
+    duration: 8.5,
     delay: 0.3,
-    yRange: 10,
+    yRange: 14,
     rotateRange: 2,
+  },
+  {
+    icon: <Lotus />,
+    className: "top-[68%] left-[18%] text-forest/20 hidden lg:block",
+    size: 44,
+    duration: 6,
+    delay: 1.4,
+    yRange: 12,
+    rotateRange: 4,
   },
   {
     icon: <Lotus />,
     className: "bottom-[8%] right-[7%] text-forest/25",
     size: 52,
-    duration: 15,
+    duration: 7,
     delay: 1.2,
-    yRange: 12,
+    yRange: 16,
     rotateRange: 5,
+  },
+  {
+    icon: <Sun />,
+    className: "bottom-[10%] left-[38%] text-sage/30 hidden sm:block",
+    size: 40,
+    duration: 6.5,
+    delay: 0.6,
+    yRange: 10,
+    rotateRange: 3,
   },
 ];
 
@@ -141,6 +197,7 @@ export default function BackgroundDecor() {
           animate={{
             y: [0, -item.yRange, 0],
             rotate: item.rotateRange ? [0, item.rotateRange, 0] : 0,
+            opacity: [0.55, 1, 0.55],
           }}
           transition={{
             duration: item.duration,
