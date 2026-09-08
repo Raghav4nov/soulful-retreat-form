@@ -98,6 +98,7 @@ export interface TranslationDict {
     heading: string;
     thankYou: (name: string) => string;
     guestFallback: string;
+    submissionErrorNotice: string;
     receivedPrefix: string;
     quote: string;
     steps: StepInfo[];
@@ -212,6 +213,8 @@ const en: TranslationDict = {
     heading: "Welcome To The Journey",
     thankYou: (name) => `Thank you, ${name}.`,
     guestFallback: "Guest",
+    submissionErrorNotice:
+      "We couldn't save your registration automatically — please also message us on WhatsApp with your details to confirm your spot.",
     receivedPrefix: "We've received your registration for:",
     quote: "Same you. But a kinder, calmer, brighter version.",
     steps: [
@@ -347,6 +350,8 @@ const hi: TranslationDict = {
     heading: "यात्रा में आपका स्वागत है",
     thankYou: (name) => `धन्यवाद, ${name}।`,
     guestFallback: "अतिथि",
+    submissionErrorNotice:
+      "हम आपका पंजीकरण अपने आप सहेज नहीं पाए — कृपया अपनी जगह पक्की करने के लिए व्हाट्सएप पर भी अपनी जानकारी भेजें।",
     receivedPrefix: "हमें आपका पंजीकरण मिल गया है:",
     quote: "वही आप। बस एक अधिक दयालु, शांत और उज्जवल संस्करण।",
     steps: [

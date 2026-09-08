@@ -6,6 +6,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { AnimatePresence } from "framer-motion";
 
 import { createFormSchema, defaultValues, type FormValues } from "@/schema/formSchema";
+import { buildSubmissionPayload } from "@/lib/submission";
 import AnimatedStep from "@/components/AnimatedStep";
 import BackgroundDecor from "@/components/ui/BackgroundDecor";
 import { LanguageToggle } from "@/components/ui/LanguageToggle";
@@ -54,6 +55,7 @@ export default function MultiStepForm({ testMode = false }: MultiStepFormProps) 
 
 function MultiStepFormInner({ testMode }: { testMode: boolean }) {
   const [step, setStep] = useState(1);
+  const [submissionError, setSubmissionError] = useState(false);
   const { t, locale } = useLanguage();
 
   const localeRef = useRef<Locale>("en");
@@ -72,8 +74,25 @@ function MultiStepFormInner({ testMode }: { testMode: boolean }) {
 
   const { trigger, handleSubmit, getValues } = methods;
 
-  const onSubmit = (data: FormValues) => {
-    console.log("Registration submitted:", data);
+  const onSubmit = async (data: FormValues) => {
+    if (testMode) {
+      console.log("[Test mode] Registration submitted (not saved):", data);
+      setSubmissionError(false);
+      return;
+    }
+
+    try {
+      const response = await fetch("/api/submit-registration", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(buildSubmissionPayload(data)),
+      });
+      if (!response.ok) throw new Error(`Request failed with status ${response.status}`);
+      setSubmissionError(false);
+    } catch (error) {
+      console.error("Failed to submit registration:", error);
+      setSubmissionError(true);
+    }
   };
 
   const goNext = async () => {
@@ -151,7 +170,7 @@ function MultiStepFormInner({ testMode }: { testMode: boolean }) {
                 {step === 7 && <Step7Emergency onNext={goNext} onBack={goBack} />}
                 {step === 8 && <Step8Summary onNext={goNext} onBack={goBack} />}
                 {step === 9 && <Step9Payment onNext={goNext} onBack={goBack} />}
-                {step === 10 && <Step10Confirmation />}
+                {step === 10 && <Step10Confirmation submissionError={submissionError} />}
               </AnimatedStep>
             </AnimatePresence>
           </div>
