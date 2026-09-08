@@ -40,7 +40,7 @@ export default function Step2About({ onNext, onBack }: Step2AboutProps) {
           error={errors.email?.message}
         />
       </div>
-      <StepNav onBack={onBack} onNext={onNext} showBack={false} />
+      <StepNav onBack={onBack} onNext={onNext} />
     </div>
   );
 }
