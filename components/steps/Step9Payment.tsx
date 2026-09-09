@@ -8,9 +8,10 @@ import { useLanguage } from "@/i18n/LanguageContext";
 type Step9PaymentProps = {
   onNext: () => void;
   onBack: () => void;
+  nextDisabled?: boolean;
 };
 
-export default function Step9Payment({ onNext, onBack }: Step9PaymentProps) {
+export default function Step9Payment({ onNext, onBack, nextDisabled }: Step9PaymentProps) {
   const {
     register,
     formState: { errors },
@@ -66,7 +67,12 @@ export default function Step9Payment({ onNext, onBack }: Step9PaymentProps) {
         )}
       </div>
 
-      <StepNav onBack={onBack} onNext={onNext} nextLabel={t.step9.registerButton} />
+      <StepNav
+        onBack={onBack}
+        onNext={onNext}
+        nextLabel={t.step9.registerButton}
+        nextDisabled={nextDisabled}
+      />
     </div>
   );
 }

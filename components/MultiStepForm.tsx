@@ -56,6 +56,7 @@ export default function MultiStepForm({ testMode = false }: MultiStepFormProps) 
 function MultiStepFormInner({ testMode }: { testMode: boolean }) {
   const [step, setStep] = useState(1);
   const [submissionError, setSubmissionError] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const { t, locale } = useLanguage();
 
   const localeRef = useRef<Locale>("en");
@@ -96,27 +97,33 @@ function MultiStepFormInner({ testMode }: { testMode: boolean }) {
   };
 
   const goNext = async () => {
-    const fields = stepFieldMap[step];
-    const isValid = testMode || (fields.length ? await trigger(fields) : true);
-    if (!isValid) return;
+    if (isSubmitting) return;
+    setIsSubmitting(true);
+    try {
+      const fields = stepFieldMap[step];
+      const isValid = testMode || (fields.length ? await trigger(fields) : true);
+      if (!isValid) return;
 
-    if (step === 8) {
-      if (getValues("registrationIntent") === "ready") {
-        setStep(9);
-      } else {
+      if (step === 8) {
+        if (getValues("registrationIntent") === "ready") {
+          setStep(9);
+        } else {
+          await handleSubmit(onSubmit)();
+          setStep(10);
+        }
+        return;
+      }
+
+      if (step === 9) {
         await handleSubmit(onSubmit)();
         setStep(10);
+        return;
       }
-      return;
-    }
 
-    if (step === 9) {
-      await handleSubmit(onSubmit)();
-      setStep(10);
-      return;
+      setStep((current) => Math.min(current + 1, TOTAL_STEPS));
+    } finally {
+      setIsSubmitting(false);
     }
-
-    setStep((current) => Math.min(current + 1, TOTAL_STEPS));
   };
 
   const goBack = () => setStep((current) => Math.max(current - 1, 1));
@@ -162,14 +169,30 @@ function MultiStepFormInner({ testMode }: { testMode: boolean }) {
             <AnimatePresence mode="wait">
               <AnimatedStep key={step}>
                 {step === 1 && <Step1Welcome onNext={goNext} />}
-                {step === 2 && <Step2About onNext={goNext} onBack={goBack} />}
-                {step === 3 && <Step3Intentions onNext={goNext} onBack={goBack} />}
-                {step === 4 && <Step4Experience onNext={goNext} onBack={goBack} />}
-                {step === 5 && <Step5Travel onNext={goNext} onBack={goBack} />}
-                {step === 6 && <Step6Food onNext={goNext} onBack={goBack} />}
-                {step === 7 && <Step7Emergency onNext={goNext} onBack={goBack} />}
-                {step === 8 && <Step8Summary onNext={goNext} onBack={goBack} />}
-                {step === 9 && <Step9Payment onNext={goNext} onBack={goBack} />}
+                {step === 2 && (
+                  <Step2About onNext={goNext} onBack={goBack} nextDisabled={isSubmitting} />
+                )}
+                {step === 3 && (
+                  <Step3Intentions onNext={goNext} onBack={goBack} nextDisabled={isSubmitting} />
+                )}
+                {step === 4 && (
+                  <Step4Experience onNext={goNext} onBack={goBack} nextDisabled={isSubmitting} />
+                )}
+                {step === 5 && (
+                  <Step5Travel onNext={goNext} onBack={goBack} nextDisabled={isSubmitting} />
+                )}
+                {step === 6 && (
+                  <Step6Food onNext={goNext} onBack={goBack} nextDisabled={isSubmitting} />
+                )}
+                {step === 7 && (
+                  <Step7Emergency onNext={goNext} onBack={goBack} nextDisabled={isSubmitting} />
+                )}
+                {step === 8 && (
+                  <Step8Summary onNext={goNext} onBack={goBack} nextDisabled={isSubmitting} />
+                )}
+                {step === 9 && (
+                  <Step9Payment onNext={goNext} onBack={goBack} nextDisabled={isSubmitting} />
+                )}
                 {step === 10 && <Step10Confirmation submissionError={submissionError} />}
               </AnimatedStep>
             </AnimatePresence>

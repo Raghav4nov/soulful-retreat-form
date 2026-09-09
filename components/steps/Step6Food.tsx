@@ -10,9 +10,10 @@ import { useLanguage } from "@/i18n/LanguageContext";
 type Step6FoodProps = {
   onNext: () => void;
   onBack: () => void;
+  nextDisabled?: boolean;
 };
 
-export default function Step6Food({ onNext, onBack }: Step6FoodProps) {
+export default function Step6Food({ onNext, onBack, nextDisabled }: Step6FoodProps) {
   const {
     control,
     register,
@@ -71,7 +72,7 @@ export default function Step6Food({ onNext, onBack }: Step6FoodProps) {
           optional
         />
       </div>
-      <StepNav onBack={onBack} onNext={onNext} />
+      <StepNav onBack={onBack} onNext={onNext} nextDisabled={nextDisabled} />
     </div>
   );
 }
