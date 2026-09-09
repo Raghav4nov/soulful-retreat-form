@@ -9,7 +9,7 @@ export default function Step1Welcome({ onNext }: Step1WelcomeProps) {
 
   return (
     <div className="flex flex-col items-center text-center">
-      <p className="font-sans text-xs font-semibold uppercase tracking-[0.2em] text-sage">
+      <p className="font-sans text-xs font-semibold uppercase tracking-[0.2em] text-sage-deep">
         {t.brand.badge}
       </p>
       <h1 className="font-playfair mt-4 text-3xl leading-tight text-forest sm:text-4xl">
