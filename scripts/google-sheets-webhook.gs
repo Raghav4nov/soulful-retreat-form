@@ -117,6 +117,20 @@ function formatExistingSheet() {
   formatSheet(sheet);
 }
 
+// Run this once manually (select it in the function dropdown and click Run)
+// to send yourself a sample confirmation email without submitting the real
+// form. Sends to your own Google account's email address so you can check
+// how it looks in your inbox. Change registrationIntent to something other
+// than "I'm ready to register" to preview the other email variant.
+function testSendConfirmationEmail() {
+  sendConfirmationEmail({
+    email: Session.getActiveUser().getEmail(),
+    fullName: "Test User",
+    registrationIntent: "I'm ready to register",
+    utrNumber: "TEST-UTR-12345",
+  });
+}
+
 function sendConfirmationEmail(data) {
   if (!data.email) return;
 
