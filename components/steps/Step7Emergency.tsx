@@ -10,9 +10,10 @@ import { useLanguage } from "@/i18n/LanguageContext";
 type Step7EmergencyProps = {
   onNext: () => void;
   onBack: () => void;
+  nextDisabled?: boolean;
 };
 
-export default function Step7Emergency({ onNext, onBack }: Step7EmergencyProps) {
+export default function Step7Emergency({ onNext, onBack, nextDisabled }: Step7EmergencyProps) {
   const {
     control,
     register,
@@ -62,7 +63,7 @@ export default function Step7Emergency({ onNext, onBack }: Step7EmergencyProps) 
           optional
         />
       </div>
-      <StepNav onBack={onBack} onNext={onNext} />
+      <StepNav onBack={onBack} onNext={onNext} nextDisabled={nextDisabled} />
     </div>
   );
 }

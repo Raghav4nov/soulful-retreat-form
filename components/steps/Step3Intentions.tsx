@@ -9,9 +9,10 @@ import { useLanguage } from "@/i18n/LanguageContext";
 type Step3IntentionsProps = {
   onNext: () => void;
   onBack: () => void;
+  nextDisabled?: boolean;
 };
 
-export default function Step3Intentions({ onNext, onBack }: Step3IntentionsProps) {
+export default function Step3Intentions({ onNext, onBack, nextDisabled }: Step3IntentionsProps) {
   const {
     control,
     formState: { errors },
@@ -49,7 +50,7 @@ export default function Step3Intentions({ onNext, onBack }: Step3IntentionsProps
           )}
         />
       </div>
-      <StepNav onBack={onBack} onNext={onNext} />
+      <StepNav onBack={onBack} onNext={onNext} nextDisabled={nextDisabled} />
     </div>
   );
 }

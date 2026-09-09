@@ -10,9 +10,10 @@ import { useLanguage } from "@/i18n/LanguageContext";
 type Step4ExperienceProps = {
   onNext: () => void;
   onBack: () => void;
+  nextDisabled?: boolean;
 };
 
-export default function Step4Experience({ onNext, onBack }: Step4ExperienceProps) {
+export default function Step4Experience({ onNext, onBack, nextDisabled }: Step4ExperienceProps) {
   const {
     control,
     register,
@@ -57,7 +58,7 @@ export default function Step4Experience({ onNext, onBack }: Step4ExperienceProps
           optional
         />
       </div>
-      <StepNav onBack={onBack} onNext={onNext} />
+      <StepNav onBack={onBack} onNext={onNext} nextDisabled={nextDisabled} />
     </div>
   );
 }

@@ -8,9 +8,10 @@ import { useLanguage } from "@/i18n/LanguageContext";
 type Step2AboutProps = {
   onNext: () => void;
   onBack: () => void;
+  nextDisabled?: boolean;
 };
 
-export default function Step2About({ onNext, onBack }: Step2AboutProps) {
+export default function Step2About({ onNext, onBack, nextDisabled }: Step2AboutProps) {
   const {
     register,
     formState: { errors },
@@ -42,7 +43,7 @@ export default function Step2About({ onNext, onBack }: Step2AboutProps) {
           error={errors.email?.message}
         />
       </div>
-      <StepNav onBack={onBack} onNext={onNext} />
+      <StepNav onBack={onBack} onNext={onNext} nextDisabled={nextDisabled} />
     </div>
   );
 }

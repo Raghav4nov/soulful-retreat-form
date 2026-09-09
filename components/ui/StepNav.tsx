@@ -5,9 +5,16 @@ type StepNavProps = {
   onNext: () => void;
   nextLabel?: string;
   showBack?: boolean;
+  nextDisabled?: boolean;
 };
 
-export function StepNav({ onBack, onNext, nextLabel, showBack = true }: StepNavProps) {
+export function StepNav({
+  onBack,
+  onNext,
+  nextLabel,
+  showBack = true,
+  nextDisabled = false,
+}: StepNavProps) {
   const { t } = useLanguage();
 
   return (
@@ -40,7 +47,8 @@ export function StepNav({ onBack, onNext, nextLabel, showBack = true }: StepNavP
       <button
         type="button"
         onClick={onNext}
-        className="rounded-full bg-forest px-8 py-4 font-sans text-sm font-semibold uppercase tracking-wide text-ivory transition-transform hover:scale-[1.02] active:scale-[0.98]"
+        disabled={nextDisabled}
+        className="rounded-full bg-forest px-8 py-4 font-sans text-sm font-semibold uppercase tracking-wide text-ivory transition-transform hover:scale-[1.02] active:scale-[0.98] disabled:cursor-not-allowed disabled:opacity-60 disabled:hover:scale-100"
       >
         {nextLabel ?? t.common.continue}
       </button>

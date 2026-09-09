@@ -16,9 +16,10 @@ import { useLanguage } from "@/i18n/LanguageContext";
 type Step5TravelProps = {
   onNext: () => void;
   onBack: () => void;
+  nextDisabled?: boolean;
 };
 
-export default function Step5Travel({ onNext, onBack }: Step5TravelProps) {
+export default function Step5Travel({ onNext, onBack, nextDisabled }: Step5TravelProps) {
   const {
     control,
     register,
@@ -99,7 +100,7 @@ export default function Step5Travel({ onNext, onBack }: Step5TravelProps) {
           optional
         />
       </div>
-      <StepNav onBack={onBack} onNext={onNext} />
+      <StepNav onBack={onBack} onNext={onNext} nextDisabled={nextDisabled} />
     </div>
   );
 }

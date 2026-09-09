@@ -9,9 +9,10 @@ import { useLanguage } from "@/i18n/LanguageContext";
 type Step8SummaryProps = {
   onNext: () => void;
   onBack: () => void;
+  nextDisabled?: boolean;
 };
 
-export default function Step8Summary({ onNext, onBack }: Step8SummaryProps) {
+export default function Step8Summary({ onNext, onBack, nextDisabled }: Step8SummaryProps) {
   const {
     control,
     watch,
@@ -79,6 +80,7 @@ export default function Step8Summary({ onNext, onBack }: Step8SummaryProps) {
         onBack={onBack}
         onNext={onNext}
         nextLabel={isReady ? t.step8.continueToPayment : t.step8.submitRegistration}
+        nextDisabled={nextDisabled}
       />
     </div>
   );
