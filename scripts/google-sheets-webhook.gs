@@ -179,5 +179,6 @@ function sendConfirmationEmail(data) {
     subject: subject,
     body: plainBody,
     htmlBody: htmlBody,
+    name: "Soulful Healing Adventure",
   });
 }
