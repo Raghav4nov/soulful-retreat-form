@@ -93,10 +93,36 @@ function Feather() {
   );
 }
 
+function SingingBowl() {
+  return (
+    <svg viewBox="0 0 64 64" fill="none" stroke="currentColor" strokeWidth="1.3" strokeLinecap="round" strokeLinejoin="round">
+      <path d="M12 40C12 49 20.5 54 32 54C43.5 54 52 49 52 40" />
+      <path d="M8 40H56" />
+      <path d="M22 14C26 10 38 10 42 14" />
+      <path d="M18 22C23 16 41 16 46 22" />
+      <path d="M28 32L44 22" />
+      <circle cx="46" cy="20.5" r="2.5" />
+    </svg>
+  );
+}
+
+function SunSalutation() {
+  return (
+    <svg viewBox="0 0 64 64" fill="none" stroke="currentColor" strokeWidth="1.3" strokeLinecap="round" strokeLinejoin="round">
+      <circle cx="32" cy="12" r="6" />
+      <path d="M32 18V38" />
+      <path d="M32 22L16 8" />
+      <path d="M32 22L48 8" />
+      <path d="M32 38L20 56" />
+      <path d="M32 38L44 56" />
+    </svg>
+  );
+}
+
 const ICONS: IconDef[] = [
   {
     icon: <Leaf />,
-    className: "top-[8%] left-[6%] text-sage/40",
+    className: "top-[8%] left-[6%] text-sage/55",
     size: 48,
     duration: 6,
     delay: 0,
@@ -105,7 +131,7 @@ const ICONS: IconDef[] = [
   },
   {
     icon: <Sun />,
-    className: "top-[10%] right-[8%] text-forest/25",
+    className: "top-[10%] right-[8%] text-forest/40",
     size: 52,
     duration: 7,
     delay: 0.4,
@@ -114,7 +140,7 @@ const ICONS: IconDef[] = [
   },
   {
     icon: <Spiral />,
-    className: "top-[3%] left-[42%] text-sage/30",
+    className: "top-[3%] left-[42%] text-sage/45",
     size: 34,
     duration: 6,
     delay: 0.9,
@@ -123,7 +149,7 @@ const ICONS: IconDef[] = [
   },
   {
     icon: <Feather />,
-    className: "top-[22%] left-[22%] text-sage/30 hidden lg:block",
+    className: "top-[22%] left-[22%] text-sage/45 hidden lg:block",
     size: 46,
     duration: 8,
     delay: 1,
@@ -132,7 +158,7 @@ const ICONS: IconDef[] = [
   },
   {
     icon: <Yogi />,
-    className: "top-[42%] left-[4%] text-forest/20 hidden lg:block",
+    className: "top-[42%] left-[4%] text-forest/35 hidden lg:block",
     size: 64,
     duration: 7.5,
     delay: 0.5,
@@ -141,7 +167,7 @@ const ICONS: IconDef[] = [
   },
   {
     icon: <Spiral />,
-    className: "top-[30%] right-[22%] text-forest/20 hidden lg:block",
+    className: "top-[30%] right-[22%] text-forest/35 hidden lg:block",
     size: 44,
     duration: 6.5,
     delay: 1.6,
@@ -150,7 +176,7 @@ const ICONS: IconDef[] = [
   },
   {
     icon: <Waves />,
-    className: "top-[55%] right-[6%] text-sage/40 hidden sm:block",
+    className: "top-[55%] right-[6%] text-sage/55 hidden sm:block",
     size: 56,
     duration: 5.5,
     delay: 0.8,
@@ -159,7 +185,7 @@ const ICONS: IconDef[] = [
   },
   {
     icon: <Mountain />,
-    className: "bottom-[14%] left-[8%] text-sage/40",
+    className: "bottom-[14%] left-[8%] text-sage/55",
     size: 50,
     duration: 8.5,
     delay: 0.3,
@@ -168,7 +194,7 @@ const ICONS: IconDef[] = [
   },
   {
     icon: <Waves />,
-    className: "bottom-[4%] right-[36%] text-sage/40",
+    className: "bottom-[4%] right-[36%] text-sage/55",
     size: 34,
     duration: 5.5,
     delay: 0.7,
@@ -177,7 +203,7 @@ const ICONS: IconDef[] = [
   },
   {
     icon: <Lotus />,
-    className: "top-[68%] left-[18%] text-forest/20 hidden lg:block",
+    className: "top-[68%] left-[18%] text-forest/35 hidden lg:block",
     size: 44,
     duration: 6,
     delay: 1.4,
@@ -186,7 +212,7 @@ const ICONS: IconDef[] = [
   },
   {
     icon: <Lotus />,
-    className: "bottom-[8%] right-[7%] text-forest/25",
+    className: "bottom-[8%] right-[7%] text-forest/40",
     size: 52,
     duration: 7,
     delay: 1.2,
@@ -195,12 +221,48 @@ const ICONS: IconDef[] = [
   },
   {
     icon: <Sun />,
-    className: "bottom-[16%] left-[38%] text-sage/30 hidden sm:block",
+    className: "bottom-[16%] left-[38%] text-sage/45 hidden sm:block",
     size: 40,
     duration: 6.5,
     delay: 0.6,
     yRange: 10,
     rotateRange: 3,
+  },
+  {
+    icon: <SingingBowl />,
+    className: "top-[45%] right-[9%] text-forest/35 hidden lg:block",
+    size: 46,
+    duration: 7,
+    delay: 1.1,
+    yRange: 12,
+    rotateRange: 4,
+  },
+  {
+    icon: <SingingBowl />,
+    className: "bottom-[28%] right-[20%] text-sage/45 hidden lg:block",
+    size: 36,
+    duration: 6,
+    delay: 0.5,
+    yRange: 10,
+    rotateRange: 3,
+  },
+  {
+    icon: <SunSalutation />,
+    className: "top-[65%] left-[6%] text-forest/35 hidden lg:block",
+    size: 50,
+    duration: 7.5,
+    delay: 0.9,
+    yRange: 14,
+    rotateRange: 3,
+  },
+  {
+    icon: <SunSalutation />,
+    className: "top-[14%] right-[32%] text-sage/45 hidden lg:block",
+    size: 38,
+    duration: 6.5,
+    delay: 1.3,
+    yRange: 12,
+    rotateRange: 4,
   },
 ];
 
