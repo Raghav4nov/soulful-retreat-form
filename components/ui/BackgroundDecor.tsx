@@ -15,7 +15,7 @@ type IconDef = {
 
 function Leaf() {
   return (
-    <svg viewBox="0 0 64 64" fill="none" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round">
+    <svg viewBox="0 0 64 64" fill="none" stroke="currentColor" strokeWidth="1.9" strokeLinecap="round" strokeLinejoin="round">
       <path d="M12 52C12 30 30 12 52 12C52 34 34 52 12 52Z" />
       <path d="M14 50C24 40 34 30 50 14" />
     </svg>
@@ -24,7 +24,7 @@ function Leaf() {
 
 function Lotus() {
   return (
-    <svg viewBox="0 0 64 64" fill="none" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round">
+    <svg viewBox="0 0 64 64" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round">
       <path d="M32 46C24 36 24 20 32 10C40 20 40 36 32 46Z" />
       <path d="M32 46C18 42 8 30 8 18C22 18 30 28 32 46Z" />
       <path d="M32 46C46 42 56 30 56 18C42 18 34 28 32 46Z" />
@@ -35,7 +35,7 @@ function Lotus() {
 
 function Sun() {
   return (
-    <svg viewBox="0 0 64 64" fill="none" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round">
+    <svg viewBox="0 0 64 64" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round">
       <circle cx="32" cy="32" r="11" />
       <path d="M32 6V14M32 50V58M6 32H14M50 32H58M13 13L18.5 18.5M45.5 45.5L51 51M51 13L45.5 18.5M18.5 45.5L13 51" />
     </svg>
@@ -44,7 +44,7 @@ function Sun() {
 
 function Mountain() {
   return (
-    <svg viewBox="0 0 64 64" fill="none" stroke="currentColor" strokeWidth="1.3" strokeLinecap="round" strokeLinejoin="round">
+    <svg viewBox="0 0 64 64" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
       <path d="M6 48L22 22L32 36L42 18L58 48Z" />
       <circle cx="48" cy="14" r="4" />
     </svg>
@@ -53,7 +53,7 @@ function Mountain() {
 
 function Yogi() {
   return (
-    <svg viewBox="0 0 64 64" fill="none" stroke="currentColor" strokeWidth="1.3" strokeLinecap="round" strokeLinejoin="round">
+    <svg viewBox="0 0 64 64" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
       <circle cx="32" cy="14" r="6" />
       <path d="M32 20V28" />
       <path d="M14 50C14 36 22 28 32 28C42 28 50 36 50 50" />
@@ -66,7 +66,7 @@ function Yogi() {
 
 function Waves() {
   return (
-    <svg viewBox="0 0 64 64" fill="none" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round">
+    <svg viewBox="0 0 64 64" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round">
       <path d="M8 40C16 30 24 30 32 40C40 50 48 50 56 40" />
       <path d="M8 28C16 18 24 18 32 28C40 38 48 38 56 28" />
     </svg>
@@ -75,7 +75,7 @@ function Waves() {
 
 function Spiral() {
   return (
-    <svg viewBox="0 0 64 64" fill="none" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round">
+    <svg viewBox="0 0 64 64" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round">
       <path d="M32 32C32 28 35 26 38 27C42 28 44 32 42 36C40 41 34 43 29 40C23 37 21 30 25 24C29 18 38 16 45 21C53 26 56 36 51 45" />
     </svg>
   );
@@ -83,7 +83,7 @@ function Spiral() {
 
 function Feather() {
   return (
-    <svg viewBox="0 0 64 64" fill="none" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round">
+    <svg viewBox="0 0 64 64" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round">
       <path d="M46 8C30 8 16 22 16 42C16 48 18 52 18 52" />
       <path d="M42 12L18 36" />
       <path d="M38 16L22 32" />
@@ -95,7 +95,7 @@ function Feather() {
 
 function SingingBowl() {
   return (
-    <svg viewBox="0 0 64 64" fill="none" stroke="currentColor" strokeWidth="1.3" strokeLinecap="round" strokeLinejoin="round">
+    <svg viewBox="0 0 64 64" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
       <path d="M12 40C12 49 20.5 54 32 54C43.5 54 52 49 52 40" />
       <path d="M8 40H56" />
       <path d="M22 14C26 10 38 10 42 14" />
@@ -108,7 +108,7 @@ function SingingBowl() {
 
 function SunSalutation() {
   return (
-    <svg viewBox="0 0 64 64" fill="none" stroke="currentColor" strokeWidth="1.3" strokeLinecap="round" strokeLinejoin="round">
+    <svg viewBox="0 0 64 64" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
       <circle cx="32" cy="12" r="6" />
       <path d="M32 18V38" />
       <path d="M32 22L16 8" />
@@ -122,7 +122,7 @@ function SunSalutation() {
 const ICONS: IconDef[] = [
   {
     icon: <Leaf />,
-    className: "top-[8%] left-[6%] text-sage/55",
+    className: "top-[8%] left-[6%] text-sage/75",
     size: 48,
     duration: 6,
     delay: 0,
@@ -131,7 +131,7 @@ const ICONS: IconDef[] = [
   },
   {
     icon: <Sun />,
-    className: "top-[10%] right-[8%] text-forest/40",
+    className: "top-[10%] right-[8%] text-forest/60",
     size: 52,
     duration: 7,
     delay: 0.4,
@@ -140,7 +140,7 @@ const ICONS: IconDef[] = [
   },
   {
     icon: <Spiral />,
-    className: "top-[3%] left-[42%] text-sage/45",
+    className: "top-[3%] left-[42%] text-sage/65",
     size: 34,
     duration: 6,
     delay: 0.9,
@@ -149,7 +149,7 @@ const ICONS: IconDef[] = [
   },
   {
     icon: <Feather />,
-    className: "top-[22%] left-[22%] text-sage/45 hidden lg:block",
+    className: "top-[22%] left-[22%] text-sage/65 hidden lg:block",
     size: 46,
     duration: 8,
     delay: 1,
@@ -158,7 +158,7 @@ const ICONS: IconDef[] = [
   },
   {
     icon: <Yogi />,
-    className: "top-[42%] left-[4%] text-forest/35 hidden lg:block",
+    className: "top-[42%] left-[4%] text-forest/55 hidden lg:block",
     size: 64,
     duration: 7.5,
     delay: 0.5,
@@ -167,7 +167,7 @@ const ICONS: IconDef[] = [
   },
   {
     icon: <Spiral />,
-    className: "top-[30%] right-[22%] text-forest/35 hidden lg:block",
+    className: "top-[30%] right-[22%] text-forest/55 hidden lg:block",
     size: 44,
     duration: 6.5,
     delay: 1.6,
@@ -176,7 +176,7 @@ const ICONS: IconDef[] = [
   },
   {
     icon: <Waves />,
-    className: "top-[55%] right-[6%] text-sage/55 hidden sm:block",
+    className: "top-[55%] right-[6%] text-sage/75 hidden sm:block",
     size: 56,
     duration: 5.5,
     delay: 0.8,
@@ -185,7 +185,7 @@ const ICONS: IconDef[] = [
   },
   {
     icon: <Mountain />,
-    className: "bottom-[14%] left-[8%] text-sage/55",
+    className: "bottom-[14%] left-[8%] text-sage/75",
     size: 50,
     duration: 8.5,
     delay: 0.3,
@@ -194,7 +194,7 @@ const ICONS: IconDef[] = [
   },
   {
     icon: <Waves />,
-    className: "bottom-[4%] right-[36%] text-sage/55",
+    className: "bottom-[4%] right-[36%] text-sage/75",
     size: 34,
     duration: 5.5,
     delay: 0.7,
@@ -203,7 +203,7 @@ const ICONS: IconDef[] = [
   },
   {
     icon: <Lotus />,
-    className: "top-[68%] left-[18%] text-forest/35 hidden lg:block",
+    className: "top-[68%] left-[18%] text-forest/55 hidden lg:block",
     size: 44,
     duration: 6,
     delay: 1.4,
@@ -212,7 +212,7 @@ const ICONS: IconDef[] = [
   },
   {
     icon: <Lotus />,
-    className: "bottom-[8%] right-[7%] text-forest/40",
+    className: "bottom-[8%] right-[7%] text-forest/60",
     size: 52,
     duration: 7,
     delay: 1.2,
@@ -221,7 +221,7 @@ const ICONS: IconDef[] = [
   },
   {
     icon: <Sun />,
-    className: "bottom-[16%] left-[38%] text-sage/45 hidden sm:block",
+    className: "bottom-[16%] left-[38%] text-sage/65 hidden sm:block",
     size: 40,
     duration: 6.5,
     delay: 0.6,
@@ -230,7 +230,7 @@ const ICONS: IconDef[] = [
   },
   {
     icon: <SingingBowl />,
-    className: "top-[45%] right-[9%] text-forest/35 hidden lg:block",
+    className: "top-[45%] right-[9%] text-forest/55 hidden lg:block",
     size: 46,
     duration: 7,
     delay: 1.1,
@@ -239,7 +239,7 @@ const ICONS: IconDef[] = [
   },
   {
     icon: <SingingBowl />,
-    className: "bottom-[28%] right-[20%] text-sage/45 hidden lg:block",
+    className: "bottom-[28%] right-[20%] text-sage/65 hidden lg:block",
     size: 36,
     duration: 6,
     delay: 0.5,
@@ -248,7 +248,7 @@ const ICONS: IconDef[] = [
   },
   {
     icon: <SunSalutation />,
-    className: "top-[65%] left-[6%] text-forest/35 hidden lg:block",
+    className: "top-[65%] left-[6%] text-forest/55 hidden lg:block",
     size: 50,
     duration: 7.5,
     delay: 0.9,
@@ -257,7 +257,7 @@ const ICONS: IconDef[] = [
   },
   {
     icon: <SunSalutation />,
-    className: "top-[14%] right-[32%] text-sage/45 hidden lg:block",
+    className: "top-[14%] right-[32%] text-sage/65 hidden lg:block",
     size: 38,
     duration: 6.5,
     delay: 1.3,
