@@ -181,7 +181,7 @@ const en: TranslationDict = {
   step8: {
     heading: "Your Place In The Journey",
     investmentLabel: "Retreat Investment",
-    investmentValue: "₹[Placeholder]",
+    investmentValue: "₹5,500",
     includesLabel: "Includes",
     includes: [
       "Accommodation",
@@ -318,7 +318,7 @@ const hi: TranslationDict = {
   step8: {
     heading: "इस यात्रा में आपका स्थान",
     investmentLabel: "रिट्रीट निवेश",
-    investmentValue: "₹[Placeholder]",
+    investmentValue: "₹5,500",
     includesLabel: "शामिल है",
     includes: [
       "आवास",

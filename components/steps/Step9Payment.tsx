@@ -29,7 +29,7 @@ export default function Step9Payment({ onNext, onBack, nextDisabled }: Step9Paym
             <p className="font-sans text-xs font-semibold uppercase tracking-[0.2em] text-sage">
               {t.step9.amountLabel}
             </p>
-            <p className="font-playfair mt-1 text-xl text-forest">₹____</p>
+            <p className="font-playfair mt-1 text-xl text-forest">{t.step8.investmentValue}</p>
           </div>
           <div>
             <p className="font-sans text-xs font-semibold uppercase tracking-[0.2em] text-sage">
