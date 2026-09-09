@@ -1,5 +1,5 @@
 import MultiStepForm from "@/components/MultiStepForm";
 
-export default function Home() {
+export default function RegistrationPage() {
   return <MultiStepForm />;
 }
