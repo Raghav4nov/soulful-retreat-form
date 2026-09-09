@@ -31,6 +31,8 @@ var HEADERS = [
   "Policy Agreement",
 ];
 
+var READY_TO_REGISTER_LABEL = "I'm ready to register";
+
 function doPost(e) {
   try {
     var data = JSON.parse(e.postData.contents);
@@ -70,6 +72,14 @@ function doPost(e) {
 
     formatSheet(sheet);
 
+    // A failed email should never make the whole submission look like it
+    // failed to the visitor — the row is already saved at this point.
+    try {
+      sendConfirmationEmail(data);
+    } catch (emailErr) {
+      console.error("Failed to send confirmation email: " + emailErr);
+    }
+
     return ContentService.createTextOutput(JSON.stringify({ ok: true })).setMimeType(
       ContentService.MimeType.JSON
     );
@@ -105,4 +115,55 @@ function formatSheet(sheet) {
 function formatExistingSheet() {
   var sheet = SpreadsheetApp.getActiveSpreadsheet().getActiveSheet();
   formatSheet(sheet);
+}
+
+function sendConfirmationEmail(data) {
+  if (!data.email) return;
+
+  var name = data.fullName || "there";
+  var isReady = data.registrationIntent === READY_TO_REGISTER_LABEL;
+
+  var subject = isReady
+    ? "Your Seat Is Reserved — Soulful Healing Adventure"
+    : "We've Received Your Interest — Soulful Healing Adventure";
+
+  var introHtml = isReady
+    ? "Thank you for registering for <strong>Soulful Healing Adventure</strong> in Rishikesh, 14&ndash;15 November 2026. " +
+      "We've received your registration and payment reference (" + (data.utrNumber || "-") + "). " +
+      "Our team will verify the details and confirm your seat shortly."
+    : "Thank you for your interest in <strong>Soulful Healing Adventure</strong> in Rishikesh, 14&ndash;15 November 2026. " +
+      "Our team will reach out to you on WhatsApp or email soon with more details.";
+
+  var introText = introHtml.replace(/<[^>]+>/g, "").replace(/&ndash;/g, "-");
+
+  var plainBody =
+    "Hi " + name + ",\n\n" +
+    introText + "\n\n" +
+    "What happens next:\n" +
+    "1. Registration received - our team will review your details.\n" +
+    "2. Confirmation - we'll contact you on WhatsApp.\n" +
+    "3. Retreat details - you'll receive the location, itinerary, and packing list.\n\n" +
+    "Good People. Good Energy. Good Experiences. See you in Rishikesh.\n\n" +
+    "- Soulful Healing Adventure Team";
+
+  var htmlBody =
+    '<div style="font-family: Georgia, serif; background:#FAF7F0; padding:24px; color:#27312D;">' +
+    '<h2 style="color:#174D3B; margin-top:0;">' + subject.replace(" — Soulful Healing Adventure", "") + "</h2>" +
+    "<p>Hi " + name + ",</p>" +
+    "<p>" + introHtml + "</p>" +
+    '<p style="color:#174D3B; font-style:italic;">Same you. But a kinder, calmer, brighter version.</p>' +
+    '<ol style="padding-left:20px;">' +
+    "<li><strong>Registration received.</strong> Our team will review your details.</li>" +
+    "<li><strong>Confirmation.</strong> We'll contact you on WhatsApp.</li>" +
+    "<li><strong>Retreat details.</strong> You'll receive the location, itinerary, and packing list.</li>" +
+    "</ol>" +
+    '<p style="color:#174D3B;"><strong>Good People. Good Energy. Good Experiences.</strong><br/>See you in Rishikesh.</p>' +
+    "</div>";
+
+  MailApp.sendEmail({
+    to: data.email,
+    subject: subject,
+    body: plainBody,
+    htmlBody: htmlBody,
+  });
 }
