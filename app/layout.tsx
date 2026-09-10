@@ -22,9 +22,24 @@ const montserrat = Montserrat({
 });
 
 export const metadata: Metadata = {
+  metadataBase: new URL("https://soulfulhealingadventure.com"),
   title: "Soulful Healing Adventure | Retreat Registration",
   description:
     "Register for the Soulful Healing Adventure retreat in Rishikesh — a journey back to yourself.",
+  openGraph: {
+    title: "Soulful Healing Adventure",
+    description:
+      "A two-day retreat in Rishikesh, 14–15 November 2026 — yoga, sound healing, quiet trails, and good company.",
+    url: "https://soulfulhealingadventure.com",
+    siteName: "Soulful Healing Adventure",
+    type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Soulful Healing Adventure",
+    description:
+      "A two-day retreat in Rishikesh, 14–15 November 2026 — yoga, sound healing, quiet trails, and good company.",
+  },
 };
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
