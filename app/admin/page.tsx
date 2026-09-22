@@ -43,7 +43,9 @@ function compareByColumn(a: Registrant, b: Registrant, column: RegistrantField):
   if (column === "Submitted At") {
     return new Date(a[column]).getTime() - new Date(b[column]).getTime();
   }
-  return (a[column] || "").localeCompare(b[column] || "");
+  // Sheet cells that look numeric come back as numbers, not strings, so
+  // coerce before calling a string-only method.
+  return String(a[column] ?? "").localeCompare(String(b[column] ?? ""));
 }
 
 // Plain (non-hook) fetch so both the mount effect and the post-delete
