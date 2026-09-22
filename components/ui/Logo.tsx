@@ -2,9 +2,17 @@ type LogoProps = {
   className?: string;
   markSize?: number;
   showWordmark?: boolean;
+  variant?: "forest" | "ivory";
 };
 
-export default function Logo({ className = "", markSize = 40, showWordmark = true }: LogoProps) {
+export default function Logo({
+  className = "",
+  markSize = 40,
+  showWordmark = true,
+  variant = "forest",
+}: LogoProps) {
+  const colorClass = variant === "ivory" ? "text-ivory" : "text-forest";
+
   return (
     <div className={`flex items-center gap-3 ${className}`}>
       <svg
@@ -15,7 +23,7 @@ export default function Logo({ className = "", markSize = 40, showWordmark = tru
         stroke="currentColor"
         strokeWidth="1.8"
         strokeLinecap="round"
-        className="shrink-0 text-forest"
+        className={`shrink-0 ${colorClass}`}
       >
         <g transform="rotate(0 60 60)">
           <ellipse cx="60" cy="37" rx="9" ry="24" />
@@ -38,7 +46,7 @@ export default function Logo({ className = "", markSize = 40, showWordmark = tru
         <circle cx="60" cy="60" r="6" />
       </svg>
       {showWordmark && (
-        <span className="font-playfair text-lg leading-none font-semibold text-forest sm:text-xl">
+        <span className={`font-playfair text-lg leading-none font-semibold sm:text-xl ${colorClass}`}>
           Soulful Healing Adventure
         </span>
       )}
