@@ -25,6 +25,7 @@ export const REGISTRANT_FIELDS = [
   "Registration Intent",
   "UTR Number",
   "Policy Agreement",
+  "Follow-up Status",
 ] as const;
 
 export type RegistrantField = (typeof REGISTRANT_FIELDS)[number];
@@ -35,6 +36,11 @@ export const READY_TO_REGISTER_LABEL = "I'm ready to register";
 export const KNOW_MORE_LABEL = "I'd like to know more before registering";
 export const SPEAK_TEAM_LABEL = "I'd like to speak with the team";
 
+export const FOLLOWUP_STATUS_OPTIONS = ["Pending", "Contacted", "Confirmed", "Not Interested"] as const;
+export type FollowupStatus = (typeof FOLLOWUP_STATUS_OPTIONS)[number];
+
+export const REGISTRATION_INTENT_FILTERS = [READY_TO_REGISTER_LABEL, KNOW_MORE_LABEL, SPEAK_TEAM_LABEL];
+
 // The columns shown directly in the table; everything else is visible in the
 // detail view when a row is opened.
 export const TABLE_COLUMNS: RegistrantField[] = [
@@ -43,4 +49,8 @@ export const TABLE_COLUMNS: RegistrantField[] = [
   "WhatsApp",
   "Email",
   "Registration Intent",
+  "Follow-up Status",
 ];
+
+// Columns a click on the table header can sort by.
+export const SORTABLE_COLUMNS: RegistrantField[] = ["Submitted At", "Full Name", "Registration Intent"];
