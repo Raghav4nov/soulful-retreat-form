@@ -2,6 +2,13 @@
 // collect registrations, then deploy it as a Web App (see setup steps in
 // the pull request description / chat). The exec URL you get from that
 // deployment goes into the GOOGLE_SHEETS_WEBHOOK_URL environment variable.
+//
+// ADMIN_SECRET below must match the ADMIN_PASSWORD environment variable set
+// on Vercel - it's what lets the /admin dashboard read and edit rows here.
+// If you ever change the admin password on Vercel, update this constant to
+// the same value and redeploy this script (Deploy > Manage deployments >
+// edit > New version), otherwise the dashboard will get "Unauthorized".
+var ADMIN_SECRET = "soulful2026";
 
 var HEADERS = [
   "Submitted At",
@@ -36,6 +43,14 @@ var READY_TO_REGISTER_LABEL = "I'm ready to register";
 function doPost(e) {
   try {
     var data = JSON.parse(e.postData.contents);
+
+    if (data.action === "adminList") {
+      return handleAdminList(data);
+    }
+    if (data.action === "adminUpdate") {
+      return handleAdminUpdate(data);
+    }
+
     var sheet = SpreadsheetApp.getActiveSpreadsheet().getActiveSheet();
 
     if (sheet.getLastRow() === 0) {
@@ -88,6 +103,66 @@ function doPost(e) {
       JSON.stringify({ ok: false, error: String(err) })
     ).setMimeType(ContentService.MimeType.JSON);
   }
+}
+
+function jsonResponse(obj) {
+  return ContentService.createTextOutput(JSON.stringify(obj)).setMimeType(
+    ContentService.MimeType.JSON
+  );
+}
+
+// Returns every registration row as JSON for the /admin dashboard.
+// Each row includes "_row" - its 1-indexed position in the sheet - so the
+// dashboard can send it back with handleAdminUpdate to edit that exact row.
+function handleAdminList(data) {
+  if (data.secret !== ADMIN_SECRET) {
+    return jsonResponse({ ok: false, error: "Unauthorized" });
+  }
+
+  var sheet = SpreadsheetApp.getActiveSpreadsheet().getActiveSheet();
+  var values = sheet.getDataRange().getValues();
+  if (values.length === 0) {
+    return jsonResponse({ ok: true, headers: HEADERS, rows: [] });
+  }
+
+  var headers = values[0];
+  var rows = [];
+  for (var i = 1; i < values.length; i++) {
+    var rowObj = { _row: i + 1 };
+    for (var col = 0; col < headers.length; col++) {
+      var value = values[i][col];
+      rowObj[headers[col]] = value instanceof Date ? value.toISOString() : value;
+    }
+    rows.push(rowObj);
+  }
+
+  return jsonResponse({ ok: true, headers: headers, rows: rows });
+}
+
+// Updates one or more fields on a single existing row, matched by its
+// sheet row number (from the "_row" field handleAdminList returned).
+function handleAdminUpdate(data) {
+  if (data.secret !== ADMIN_SECRET) {
+    return jsonResponse({ ok: false, error: "Unauthorized" });
+  }
+
+  var rowNumber = data.row;
+  var fields = data.fields || {};
+  if (!rowNumber || rowNumber < 2) {
+    return jsonResponse({ ok: false, error: "Invalid row" });
+  }
+
+  var sheet = SpreadsheetApp.getActiveSpreadsheet().getActiveSheet();
+  var headers = sheet.getRange(1, 1, 1, sheet.getLastColumn()).getValues()[0];
+
+  for (var col = 0; col < headers.length; col++) {
+    var header = headers[col];
+    if (Object.prototype.hasOwnProperty.call(fields, header)) {
+      sheet.getRange(rowNumber, col + 1).setValue(fields[header]);
+    }
+  }
+
+  return jsonResponse({ ok: true });
 }
 
 // Re-applies the sheet's look on every submission, so it stays tidy even
