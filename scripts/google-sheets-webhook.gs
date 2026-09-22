@@ -36,7 +36,14 @@ var HEADERS = [
   "Registration Intent",
   "UTR Number",
   "Policy Agreement",
+  "Follow-up Status",
 ];
+
+// "Follow-up Status" is admin-only and never sent by the public form, so it
+// won't exist on a sheet created before this change. If your sheet already
+// has rows, add a "Follow-up Status" header cell yourself in the next empty
+// column of row 1 - handleAdminList/handleAdminUpdate read headers straight
+// from the sheet, so nothing else needs to change once that cell is there.
 
 var READY_TO_REGISTER_LABEL = "I'm ready to register";
 
@@ -49,6 +56,9 @@ function doPost(e) {
     }
     if (data.action === "adminUpdate") {
       return handleAdminUpdate(data);
+    }
+    if (data.action === "adminDelete") {
+      return handleAdminDelete(data);
     }
 
     var sheet = SpreadsheetApp.getActiveSpreadsheet().getActiveSheet();
@@ -162,6 +172,27 @@ function handleAdminUpdate(data) {
     }
   }
 
+  return jsonResponse({ ok: true });
+}
+
+// Permanently removes a single row, matched by its sheet row number (from
+// the "_row" field handleAdminList returned).
+function handleAdminDelete(data) {
+  if (data.secret !== ADMIN_SECRET) {
+    return jsonResponse({ ok: false, error: "Unauthorized" });
+  }
+
+  var rowNumber = data.row;
+  if (!rowNumber || rowNumber < 2) {
+    return jsonResponse({ ok: false, error: "Invalid row" });
+  }
+
+  var sheet = SpreadsheetApp.getActiveSpreadsheet().getActiveSheet();
+  if (rowNumber > sheet.getLastRow()) {
+    return jsonResponse({ ok: false, error: "Row not found" });
+  }
+
+  sheet.deleteRow(rowNumber);
   return jsonResponse({ ok: true });
 }
 
