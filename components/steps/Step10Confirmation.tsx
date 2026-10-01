@@ -10,6 +10,9 @@ export default function Step10Confirmation({ submissionError }: Step10Confirmati
   const { watch } = useFormContext<FormValues>();
   const { t } = useLanguage();
   const fullName = watch("fullName");
+  const registrationIntent = watch("registrationIntent");
+  const utrNumber = watch("utrNumber");
+  const isPaidRegistration = registrationIntent === "ready" && utrNumber?.trim();
 
   return (
     <div className="flex flex-col items-center text-center">
@@ -23,6 +26,12 @@ export default function Step10Confirmation({ submissionError }: Step10Confirmati
       <p className="mt-2 max-w-md font-sans text-sm leading-relaxed text-charcoal/70 sm:text-base">
         {t.step10.receivedPrefix} {t.brand.name} · {t.brand.dateLocation}
       </p>
+
+      {isPaidRegistration && (
+        <p className="mt-4 max-w-md rounded-2xl border border-forest/20 bg-forest/5 px-4 py-3 font-sans text-sm leading-relaxed text-forest">
+          {t.step10.paymentConfirmation(utrNumber!.trim())}
+        </p>
+      )}
 
       {submissionError && (
         <p className="mt-4 max-w-md rounded-2xl border border-red-300 bg-red-50 px-4 py-3 font-sans text-sm text-red-700">

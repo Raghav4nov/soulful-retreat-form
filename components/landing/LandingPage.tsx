@@ -158,7 +158,7 @@ export default function LandingPage() {
               <p className="font-sans text-xs font-semibold uppercase tracking-[0.2em] text-sage-deep">
                 Your Investment
               </p>
-              <p className="font-playfair mt-3 text-5xl text-forest">₹5,500</p>
+              <p className="font-playfair mt-3 text-5xl text-forest">₹10,000</p>
               <p className="mt-3 font-sans text-sm text-charcoal/70">
                 Per person, for the full two-day retreat.
               </p>
