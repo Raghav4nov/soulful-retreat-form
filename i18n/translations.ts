@@ -88,7 +88,15 @@ export interface TranslationDict {
     intro: string;
     amountLabel: string;
     upiLabel: string;
-    qrPlaceholder: string;
+    copyUpiId: string;
+    copiedLabel: string;
+    scanQrLabel: string;
+    payWithLabel: string;
+    payGpay: string;
+    payPhonePe: string;
+    payPaytm: string;
+    payAnyApp: string;
+    alreadyPaidLabel: string;
     utrLabel: string;
     utrPlaceholder: string;
     agreementLabel: string;
@@ -100,6 +108,7 @@ export interface TranslationDict {
     guestFallback: string;
     submissionErrorNotice: string;
     receivedPrefix: string;
+    paymentConfirmation: (utr: string) => string;
     quote: string;
     steps: StepInfo[];
     finalText: string;
@@ -181,7 +190,7 @@ const en: TranslationDict = {
   step8: {
     heading: "Your Place In The Journey",
     investmentLabel: "Retreat Investment",
-    investmentValue: "₹5,500",
+    investmentValue: "₹10,000",
     includesLabel: "Includes",
     includes: [
       "Accommodation",
@@ -203,7 +212,15 @@ const en: TranslationDict = {
     intro: "Your journey is almost ready to begin.",
     amountLabel: "Registration Amount",
     upiLabel: "UPI ID",
-    qrPlaceholder: "QR Code",
+    copyUpiId: "Copy",
+    copiedLabel: "Copied!",
+    scanQrLabel: "Scan with any UPI app to pay",
+    payWithLabel: "Or pay directly from your phone",
+    payGpay: "Google Pay",
+    payPhonePe: "PhonePe",
+    payPaytm: "Paytm",
+    payAnyApp: "Any UPI App",
+    alreadyPaidLabel: "Already paid? Enter your transaction details below.",
     utrLabel: "Transaction / UTR Number",
     utrPlaceholder: "Enter the transaction reference",
     agreementLabel: "I confirm my details are accurate and agree to the retreat policies.",
@@ -216,6 +233,8 @@ const en: TranslationDict = {
     submissionErrorNotice:
       "We couldn't save your registration automatically — please also message us on WhatsApp with your details to confirm your spot.",
     receivedPrefix: "We've received your registration for:",
+    paymentConfirmation: (utr) =>
+      `We've received your payment reference (${utr}). Our team will verify it and confirm your seat shortly.`,
     quote: "Same you. But a kinder, calmer, brighter version.",
     steps: [
       { title: "Registration received.", description: "Our team will review your details." },
@@ -318,7 +337,7 @@ const hi: TranslationDict = {
   step8: {
     heading: "इस यात्रा में आपका स्थान",
     investmentLabel: "रिट्रीट निवेश",
-    investmentValue: "₹5,500",
+    investmentValue: "₹10,000",
     includesLabel: "शामिल है",
     includes: [
       "आवास",
@@ -340,7 +359,15 @@ const hi: TranslationDict = {
     intro: "आपकी यात्रा शुरू होने ही वाली है।",
     amountLabel: "पंजीकरण राशि",
     upiLabel: "यूपीआई आईडी",
-    qrPlaceholder: "क्यूआर कोड",
+    copyUpiId: "कॉपी करें",
+    copiedLabel: "कॉपी हो गया!",
+    scanQrLabel: "भुगतान के लिए किसी भी यूपीआई ऐप से स्कैन करें",
+    payWithLabel: "या सीधे अपने फ़ोन से भुगतान करें",
+    payGpay: "गूगल पे",
+    payPhonePe: "फ़ोनपे",
+    payPaytm: "पेटीएम",
+    payAnyApp: "कोई भी यूपीआई ऐप",
+    alreadyPaidLabel: "भुगतान कर दिया? नीचे अपने लेनदेन का विवरण दर्ज करें।",
     utrLabel: "लेनदेन / यूटीआर नंबर",
     utrPlaceholder: "लेनदेन संदर्भ दर्ज करें",
     agreementLabel: "यह जानकारी सही है और मैं रिट्रीट की नीतियों से सहमत हूँ।",
@@ -353,6 +380,8 @@ const hi: TranslationDict = {
     submissionErrorNotice:
       "हम आपका पंजीकरण अपने आप सहेज नहीं पाए — कृपया अपनी जगह पक्की करने के लिए व्हाट्सएप पर भी अपनी जानकारी भेजें।",
     receivedPrefix: "हमें आपका पंजीकरण मिल गया है:",
+    paymentConfirmation: (utr) =>
+      `हमें आपका भुगतान संदर्भ (${utr}) मिल गया है। हमारी टीम इसे सत्यापित करेगी और जल्द ही आपकी सीट की पुष्टि करेगी।`,
     quote: "वही आप। बस एक अधिक दयालु, शांत और उज्जवल संस्करण।",
     steps: [
       { title: "पंजीकरण प्राप्त हुआ।", description: "हमारी टीम आपकी जानकारी की समीक्षा करेगी।" },
