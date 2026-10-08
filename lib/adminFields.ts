@@ -23,6 +23,7 @@ export const REGISTRANT_FIELDS = [
   "Emergency Relationship",
   "Activity Notes",
   "Registration Intent",
+  "Amount Due",
   "UTR Number",
   "Policy Agreement",
   "Follow-up Status",
@@ -49,6 +50,7 @@ export const TABLE_COLUMNS: RegistrantField[] = [
   "WhatsApp",
   "Email",
   "Registration Intent",
+  "Amount Due",
   "Follow-up Status",
 ];
 

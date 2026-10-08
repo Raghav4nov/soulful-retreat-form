@@ -75,6 +75,8 @@ export interface TranslationDict {
     heading: string;
     investmentLabel: string;
     investmentValue: string;
+    deluxeLineLabel: string;
+    totalLabel: string;
     includesLabel: string;
     includes: string[];
     notIncludedLabel: string;
@@ -190,7 +192,9 @@ const en: TranslationDict = {
   step8: {
     heading: "Your Place In The Journey",
     investmentLabel: "Retreat Investment",
-    investmentValue: "₹10,000",
+    investmentValue: "₹10,999",
+    deluxeLineLabel: "Deluxe Room Upgrade",
+    totalLabel: "Total Amount",
     includesLabel: "Includes",
     includes: [
       "Accommodation",
@@ -337,7 +341,9 @@ const hi: TranslationDict = {
   step8: {
     heading: "इस यात्रा में आपका स्थान",
     investmentLabel: "रिट्रीट निवेश",
-    investmentValue: "₹10,000",
+    investmentValue: "₹10,999",
+    deluxeLineLabel: "डीलक्स रूम अपग्रेड",
+    totalLabel: "कुल राशि",
     includesLabel: "शामिल है",
     includes: [
       "आवास",

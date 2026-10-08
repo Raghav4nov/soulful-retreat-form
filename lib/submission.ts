@@ -13,6 +13,7 @@ import {
   REGISTRATION_INTENT_OPTIONS,
   type Option,
 } from "@/schema/options";
+import { formatInr, getTotalPrice } from "@/lib/pricing";
 
 // Submissions are always recorded in English, regardless of which
 // language the visitor filled the form in, so the sheet stays consistent.
@@ -50,6 +51,7 @@ export function buildSubmissionPayload(data: FormValues) {
     emergencyRelationship: labelFor(RELATIONSHIP_OPTIONS, data.emergencyRelationship),
     activityNotes: data.activityNotes || "",
     registrationIntent: labelFor(REGISTRATION_INTENT_OPTIONS, data.registrationIntent),
+    amountDue: formatInr(getTotalPrice(data.accommodationPreference)),
     utrNumber: data.utrNumber || "",
     policyAgreement: data.policyAgreement ? "Yes" : "No",
   };
