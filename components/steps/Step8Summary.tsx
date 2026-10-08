@@ -5,7 +5,7 @@ import { PillGroup } from "@/components/ui/PillGroup";
 import { StepHeading } from "@/components/ui/StepHeading";
 import { StepNav } from "@/components/ui/StepNav";
 import { useLanguage } from "@/i18n/LanguageContext";
-import { DELUXE_ACCOMMODATION_VALUE, DELUXE_ROOM_SURCHARGE, formatInr, getTotalPrice } from "@/lib/pricing";
+import { DELUXE_ROOM_SURCHARGE, formatInr, getTotalPrice } from "@/lib/pricing";
 
 type Step8SummaryProps = {
   onNext: () => void;
@@ -16,6 +16,7 @@ type Step8SummaryProps = {
 export default function Step8Summary({ onNext, onBack, nextDisabled }: Step8SummaryProps) {
   const {
     control,
+    register,
     watch,
     formState: { errors },
   } = useFormContext<FormValues>();
@@ -23,9 +24,8 @@ export default function Step8Summary({ onNext, onBack, nextDisabled }: Step8Summ
 
   const registrationIntent = watch("registrationIntent");
   const isReady = registrationIntent === "ready";
-  const accommodationPreference = watch("accommodationPreference");
-  const isDeluxe = accommodationPreference === DELUXE_ACCOMMODATION_VALUE;
-  const totalPrice = getTotalPrice(accommodationPreference);
+  const isDeluxe = watch("deluxeRoomUpgrade");
+  const totalPrice = getTotalPrice(isDeluxe);
 
   return (
     <div>
@@ -42,6 +42,15 @@ export default function Step8Summary({ onNext, onBack, nextDisabled }: Step8Summ
             {t.step8.investmentLabel}
           </p>
           <p className="font-playfair mt-1 text-2xl">{t.step8.investmentValue}</p>
+
+          <label className="mt-4 flex cursor-pointer items-center gap-3 font-sans text-sm text-ivory/90">
+            <input
+              type="checkbox"
+              {...register("deluxeRoomUpgrade")}
+              className="h-4 w-4 rounded border-ivory/50 accent-ivory focus:ring-ivory/30"
+            />
+            <span>{t.step8.deluxeUpgradeLabel}</span>
+          </label>
 
           {isDeluxe && (
             <>

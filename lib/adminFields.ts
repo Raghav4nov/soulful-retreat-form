@@ -23,6 +23,7 @@ export const REGISTRANT_FIELDS = [
   "Emergency Relationship",
   "Activity Notes",
   "Registration Intent",
+  "Deluxe Room Upgrade",
   "Amount Due",
   "UTR Number",
   "Policy Agreement",

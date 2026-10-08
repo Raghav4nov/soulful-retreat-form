@@ -34,15 +34,16 @@ var HEADERS = [
   "Emergency Relationship",
   "Activity Notes",
   "Registration Intent",
+  "Deluxe Room Upgrade",
   "Amount Due",
   "UTR Number",
   "Policy Agreement",
   "Follow-up Status",
 ];
 
-// "Follow-up Status" is admin-only and "Amount Due" is new as of this
-// change, so neither exists yet on a sheet created before it. If your
-// sheet already has rows, add each missing header yourself as a new
+// "Follow-up Status", "Deluxe Room Upgrade" and "Amount Due" are each new
+// at different points, so none of them exist yet on an older sheet. If
+// your sheet already has rows, add each missing header yourself as a new
 // column in row 1 (any position - doPost/handleAdminList/handleAdminUpdate
 // all match columns by header name, not position) and values will start
 // landing there immediately, no other change needed.
@@ -103,6 +104,7 @@ function doPost(e) {
       "Emergency Relationship": data.emergencyRelationship || "",
       "Activity Notes": data.activityNotes || "",
       "Registration Intent": data.registrationIntent || "",
+      "Deluxe Room Upgrade": data.deluxeRoomUpgrade || "",
       "Amount Due": data.amountDue || "",
       "UTR Number": data.utrNumber || "",
       "Policy Agreement": data.policyAgreement || "",

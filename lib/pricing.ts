@@ -4,15 +4,10 @@
 export const BASE_PRICE = 10999;
 export const DELUXE_ROOM_SURCHARGE = 4000;
 
-// Matches the "deluxe" value in ACCOMMODATION_OPTIONS (schema/options.ts).
-export const DELUXE_ACCOMMODATION_VALUE = "deluxe";
-
 export function formatInr(amount: number): string {
   return `₹${amount.toLocaleString("en-IN")}`;
 }
 
-export function getTotalPrice(accommodationPreference: string | undefined): number {
-  return accommodationPreference === DELUXE_ACCOMMODATION_VALUE
-    ? BASE_PRICE + DELUXE_ROOM_SURCHARGE
-    : BASE_PRICE;
+export function getTotalPrice(hasDeluxeUpgrade: boolean | undefined): number {
+  return hasDeluxeUpgrade ? BASE_PRICE + DELUXE_ROOM_SURCHARGE : BASE_PRICE;
 }
