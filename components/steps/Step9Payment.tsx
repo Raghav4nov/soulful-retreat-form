@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import { useFormContext } from "react-hook-form";
 import { QRCodeSVG } from "qrcode.react";
 import type { FormValues } from "@/schema/formSchema";
@@ -8,34 +8,25 @@ import { TextField } from "@/components/ui/TextField";
 import { StepHeading, StepIntro } from "@/components/ui/StepHeading";
 import { StepNav } from "@/components/ui/StepNav";
 import { useLanguage } from "@/i18n/LanguageContext";
+import { formatInr, getTotalPrice } from "@/lib/pricing";
 
-// Receiving UPI ID for retreat payments. Update here (and the matching
-// amount below, which must stay in sync with step8.investmentValue /
-// step9.amountLabel in i18n/translations.ts) if either ever changes.
+// Receiving UPI ID for retreat payments — update here if it ever changes.
+// The amount is computed from the selected accommodation (lib/pricing.ts),
+// not hardcoded, so it always matches what Step 8 showed.
 const UPI_VPA = "parmanandpriyanka@ybl";
 const UPI_PAYEE_NAME = "Soulful Healing Adventure";
-const UPI_AMOUNT = "10000";
 const UPI_NOTE = "Soulful Healing Adventure Registration";
 
-function buildUpiLink(scheme: string): string {
+function buildUpiLink(scheme: string, amount: number): string {
   const params = new URLSearchParams({
     pa: UPI_VPA,
     pn: UPI_PAYEE_NAME,
-    am: UPI_AMOUNT,
+    am: String(amount),
     cu: "INR",
     tn: UPI_NOTE,
   });
   return `${scheme}://pay?${params.toString()}`;
 }
-
-// The generic "upi://" link is what the QR code encodes, since a camera
-// scan has no app context — the phone's own UPI app handles it. The
-// app-specific schemes below are what let a button deep-link straight
-// into that one app on a phone that already has it installed.
-const GENERIC_UPI_LINK = buildUpiLink("upi");
-const GPAY_LINK = buildUpiLink("tez");
-const PHONEPE_LINK = buildUpiLink("phonepe");
-const PAYTM_LINK = buildUpiLink("paytmmp");
 
 type Step9PaymentProps = {
   onNext: () => void;
@@ -46,10 +37,24 @@ type Step9PaymentProps = {
 export default function Step9Payment({ onNext, onBack, nextDisabled }: Step9PaymentProps) {
   const {
     register,
+    watch,
     formState: { errors },
   } = useFormContext<FormValues>();
   const { t } = useLanguage();
   const [copied, setCopied] = useState(false);
+
+  const accommodationPreference = watch("accommodationPreference");
+  const totalPrice = getTotalPrice(accommodationPreference);
+
+  const upiLinks = useMemo(
+    () => ({
+      generic: buildUpiLink("upi", totalPrice),
+      gpay: buildUpiLink("tez", totalPrice),
+      phonePe: buildUpiLink("phonepe", totalPrice),
+      paytm: buildUpiLink("paytmmp", totalPrice),
+    }),
+    [totalPrice]
+  );
 
   async function handleCopyUpiId() {
     try {
@@ -72,11 +77,11 @@ export default function Step9Payment({ onNext, onBack, nextDisabled }: Step9Paym
           <p className="font-sans text-xs font-semibold uppercase tracking-[0.2em] text-sage">
             {t.step9.amountLabel}
           </p>
-          <p className="font-playfair text-3xl text-forest">{t.step8.investmentValue}</p>
+          <p className="font-playfair text-3xl text-forest">{formatInr(totalPrice)}</p>
         </div>
 
         <div className="mx-auto mt-6 flex w-fit items-center justify-center rounded-2xl border border-sage/40 bg-ivory p-4">
-          <QRCodeSVG value={GENERIC_UPI_LINK} size={160} fgColor="#174D3B" />
+          <QRCodeSVG value={upiLinks.generic} size={160} fgColor="#174D3B" />
         </div>
         <p className="mt-3 text-center font-sans text-xs text-charcoal/60">{t.step9.scanQrLabel}</p>
 
@@ -100,25 +105,25 @@ export default function Step9Payment({ onNext, onBack, nextDisabled }: Step9Paym
           <p className="text-center font-sans text-xs text-charcoal/60">{t.step9.payWithLabel}</p>
           <div className="mt-3 flex flex-col gap-3">
             <a
-              href={GPAY_LINK}
+              href={upiLinks.gpay}
               className="rounded-full border border-sage/50 bg-white px-5 py-3 text-center font-sans text-sm font-semibold text-charcoal"
             >
               {t.step9.payGpay}
             </a>
             <a
-              href={PHONEPE_LINK}
+              href={upiLinks.phonePe}
               className="rounded-full bg-[#5f259f] px-5 py-3 text-center font-sans text-sm font-semibold text-white"
             >
               {t.step9.payPhonePe}
             </a>
             <a
-              href={PAYTM_LINK}
+              href={upiLinks.paytm}
               className="rounded-full bg-[#00baf2] px-5 py-3 text-center font-sans text-sm font-semibold text-white"
             >
               {t.step9.payPaytm}
             </a>
             <a
-              href={GENERIC_UPI_LINK}
+              href={upiLinks.generic}
               className="rounded-full border border-forest/40 px-5 py-3 text-center font-sans text-sm font-semibold text-forest"
             >
               {t.step9.payAnyApp}

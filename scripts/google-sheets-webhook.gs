@@ -34,16 +34,18 @@ var HEADERS = [
   "Emergency Relationship",
   "Activity Notes",
   "Registration Intent",
+  "Amount Due",
   "UTR Number",
   "Policy Agreement",
   "Follow-up Status",
 ];
 
-// "Follow-up Status" is admin-only and never sent by the public form, so it
-// won't exist on a sheet created before this change. If your sheet already
-// has rows, add a "Follow-up Status" header cell yourself in the next empty
-// column of row 1 - handleAdminList/handleAdminUpdate read headers straight
-// from the sheet, so nothing else needs to change once that cell is there.
+// "Follow-up Status" is admin-only and "Amount Due" is new as of this
+// change, so neither exists yet on a sheet created before it. If your
+// sheet already has rows, add each missing header yourself as a new
+// column in row 1 (any position - doPost/handleAdminList/handleAdminUpdate
+// all match columns by header name, not position) and values will start
+// landing there immediately, no other change needed.
 
 var READY_TO_REGISTER_LABEL = "I'm ready to register";
 
@@ -67,33 +69,50 @@ function doPost(e) {
       sheet.appendRow(HEADERS);
     }
 
-    sheet.appendRow([
-      data.submittedAt ? new Date(data.submittedAt) : new Date(),
-      data.fullName || "",
-      data.whatsapp || "",
-      data.email || "",
-      data.intentions || "",
-      data.experiences || "",
-      data.experienceType || "",
-      data.outdoorComfort || "",
-      data.specialRequests || "",
-      data.travellingFromOutside || "",
-      data.travelMode || "",
-      data.travelGuidance || "",
-      data.accommodationPreference || "",
-      data.companionName || "",
-      data.foodPreference || "",
-      data.hasAllergies || "",
-      data.allergyDetails || "",
-      data.foodNotes || "",
-      data.emergencyContactName || "",
-      data.emergencyContactNumber || "",
-      data.emergencyRelationship || "",
-      data.activityNotes || "",
-      data.registrationIntent || "",
-      data.utrNumber || "",
-      data.policyAgreement || "",
-    ]);
+    // Written by matching each value to its header BY NAME, not by array
+    // position. appendRow([...]) would silently misalign every later
+    // column the moment the sheet's real column order (which can include
+    // admin-only columns like "Follow-up Status" added by hand, in
+    // whatever position they were added) stops matching HEADERS above -
+    // which is exactly what adding a new field used to risk. A header
+    // this sheet doesn't have yet is simply skipped (its value goes
+    // nowhere) until that header cell is added, same as other admin-only
+    // columns.
+    var sheetHeaders = sheet.getRange(1, 1, 1, sheet.getLastColumn()).getValues()[0];
+    var fieldValues = {
+      "Submitted At": data.submittedAt ? new Date(data.submittedAt) : new Date(),
+      "Full Name": data.fullName || "",
+      WhatsApp: data.whatsapp || "",
+      Email: data.email || "",
+      Intentions: data.intentions || "",
+      Experiences: data.experiences || "",
+      "Experience Type": data.experienceType || "",
+      "Outdoor Comfort": data.outdoorComfort || "",
+      "Special Requests": data.specialRequests || "",
+      "Travelling From Outside": data.travellingFromOutside || "",
+      "Travel Mode": data.travelMode || "",
+      "Travel Guidance": data.travelGuidance || "",
+      Accommodation: data.accommodationPreference || "",
+      "Companion Name": data.companionName || "",
+      "Food Preference": data.foodPreference || "",
+      "Has Allergies": data.hasAllergies || "",
+      "Allergy Details": data.allergyDetails || "",
+      "Food Notes": data.foodNotes || "",
+      "Emergency Contact Name": data.emergencyContactName || "",
+      "Emergency Contact Number": data.emergencyContactNumber || "",
+      "Emergency Relationship": data.emergencyRelationship || "",
+      "Activity Notes": data.activityNotes || "",
+      "Registration Intent": data.registrationIntent || "",
+      "Amount Due": data.amountDue || "",
+      "UTR Number": data.utrNumber || "",
+      "Policy Agreement": data.policyAgreement || "",
+    };
+
+    var row = sheetHeaders.map(function (header) {
+      return Object.prototype.hasOwnProperty.call(fieldValues, header) ? fieldValues[header] : "";
+    });
+
+    sheet.appendRow(row);
 
     formatSheet(sheet);
 

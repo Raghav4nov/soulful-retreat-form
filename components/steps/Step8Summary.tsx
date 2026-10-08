@@ -5,6 +5,7 @@ import { PillGroup } from "@/components/ui/PillGroup";
 import { StepHeading } from "@/components/ui/StepHeading";
 import { StepNav } from "@/components/ui/StepNav";
 import { useLanguage } from "@/i18n/LanguageContext";
+import { DELUXE_ACCOMMODATION_VALUE, DELUXE_ROOM_SURCHARGE, formatInr, getTotalPrice } from "@/lib/pricing";
 
 type Step8SummaryProps = {
   onNext: () => void;
@@ -22,6 +23,9 @@ export default function Step8Summary({ onNext, onBack, nextDisabled }: Step8Summ
 
   const registrationIntent = watch("registrationIntent");
   const isReady = registrationIntent === "ready";
+  const accommodationPreference = watch("accommodationPreference");
+  const isDeluxe = accommodationPreference === DELUXE_ACCOMMODATION_VALUE;
+  const totalPrice = getTotalPrice(accommodationPreference);
 
   return (
     <div>
@@ -38,6 +42,21 @@ export default function Step8Summary({ onNext, onBack, nextDisabled }: Step8Summ
             {t.step8.investmentLabel}
           </p>
           <p className="font-playfair mt-1 text-2xl">{t.step8.investmentValue}</p>
+
+          {isDeluxe && (
+            <>
+              <div className="mt-3 flex items-center justify-between font-sans text-sm text-ivory/90">
+                <span>{t.step8.deluxeLineLabel}</span>
+                <span>+{formatInr(DELUXE_ROOM_SURCHARGE)}</span>
+              </div>
+              <div className="mt-3 flex items-center justify-between border-t border-ivory/20 pt-3">
+                <span className="font-sans text-xs font-semibold uppercase tracking-[0.2em] text-ivory/70">
+                  {t.step8.totalLabel}
+                </span>
+                <span className="font-playfair text-xl">{formatInr(totalPrice)}</span>
+              </div>
+            </>
+          )}
         </div>
 
         <div className="mt-6 border-t border-ivory/20 pt-6">
