@@ -43,8 +43,7 @@ export default function Step9Payment({ onNext, onBack, nextDisabled }: Step9Paym
   const { t } = useLanguage();
   const [copied, setCopied] = useState(false);
 
-  const accommodationPreference = watch("accommodationPreference");
-  const totalPrice = getTotalPrice(accommodationPreference);
+  const totalPrice = getTotalPrice(watch("deluxeRoomUpgrade"));
 
   const upiLinks = useMemo(
     () => ({
@@ -145,7 +144,7 @@ export default function Step9Payment({ onNext, onBack, nextDisabled }: Step9Paym
           <input
             type="checkbox"
             {...register("policyAgreement")}
-            className="mt-1 h-4 w-4 rounded border-sage text-forest focus:ring-forest/40"
+            className="mt-1 h-4 w-4 rounded border-sage accent-forest focus:ring-forest/40"
           />
           <span>{t.step9.agreementLabel}</span>
         </label>

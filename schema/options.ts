@@ -1,5 +1,4 @@
 import type { Locale } from "@/i18n/types";
-import { DELUXE_ROOM_SURCHARGE, formatInr } from "@/lib/pricing";
 
 export type Option = { value: string; label: Record<Locale, string> };
 export type LocalizedOption = { value: string; label: string };
@@ -88,13 +87,6 @@ export const ACCOMMODATION_OPTIONS: Option[] = [
   { value: "single", label: { en: "Single occupancy", hi: "एकल आवास" } },
   { value: "twin", label: { en: "Twin sharing", hi: "ट्विन शेयरिंग" } },
   { value: "triple", label: { en: "Triple sharing", hi: "ट्रिपल शेयरिंग" } },
-  {
-    value: "deluxe",
-    label: {
-      en: `Deluxe Room (+${formatInr(DELUXE_ROOM_SURCHARGE)})`,
-      hi: `डीलक्स रूम (+${formatInr(DELUXE_ROOM_SURCHARGE)})`,
-    },
-  },
   {
     value: "none",
     label: { en: "I don't need accommodation", hi: "मुझे आवास की आवश्यकता नहीं है" },
