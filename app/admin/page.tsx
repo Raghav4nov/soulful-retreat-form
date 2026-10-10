@@ -94,7 +94,10 @@ export default function AdminDashboardPage() {
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ row, fields }),
     });
-    if (!response.ok) throw new Error("Failed to save");
+    if (!response.ok) {
+      const data = await response.json().catch(() => null);
+      throw new Error(data?.error || "Failed to save");
+    }
 
     setRegistrants((prev) =>
       prev
@@ -333,7 +336,12 @@ export default function AdminDashboardPage() {
                             <select
                               value={registrant[column] || ""}
                               onClick={(event) => event.stopPropagation()}
-                              onChange={(event) => handleSave(registrant._row, { "Follow-up Status": event.target.value })}
+                              onChange={(event) => {
+                                const value = event.target.value;
+                                handleSave(registrant._row, { "Follow-up Status": value }).catch((err) => {
+                                  setError(err instanceof Error ? err.message : "Failed to update follow-up status.");
+                                });
+                              }}
                               className="rounded-lg border border-sage/40 bg-white px-2 py-1 font-sans text-xs text-charcoal outline-none focus:border-forest"
                             >
                               <option value="">Pending</option>
