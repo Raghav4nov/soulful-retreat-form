@@ -237,8 +237,8 @@ export default function AdminDashboardPage() {
   }
 
   return (
-    <div className="flex min-h-full bg-ivory">
-      <aside className="hidden w-64 shrink-0 flex-col bg-forest px-6 py-8 text-ivory sm:flex">
+    <div className="min-h-full bg-ivory">
+      <aside className="fixed inset-y-0 left-0 hidden w-64 flex-col overflow-y-auto bg-forest px-6 py-8 text-ivory sm:flex">
         <Logo showWordmark={false} markSize={40} variant="ivory" />
         <p className="font-playfair mt-4 text-lg">Soulful Healing</p>
         <nav className="mt-10 flex flex-col gap-1">
@@ -255,7 +255,7 @@ export default function AdminDashboardPage() {
         </button>
       </aside>
 
-      <main className="min-w-0 flex-1 px-6 py-8 sm:px-10">
+      <main className="min-w-0 px-6 py-8 sm:ml-64 sm:px-10">
         <div className="flex flex-col gap-1 sm:flex-row sm:items-center sm:justify-between">
           <div>
             <h1 className="font-playfair text-3xl text-forest">Dashboard</h1>
