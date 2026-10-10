@@ -138,6 +138,8 @@ export default function Step9Payment({ onNext, onBack, nextDisabled }: Step9Paym
           placeholder={t.step9.utrPlaceholder}
           registration={register("utrNumber")}
           error={errors.utrNumber?.message}
+          inputMode="numeric"
+          maxLength={12}
         />
 
         <label className="flex items-start gap-3 font-sans text-sm text-charcoal">

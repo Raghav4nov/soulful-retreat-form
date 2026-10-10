@@ -8,6 +8,8 @@ type TextFieldProps = {
   error?: string;
   type?: string;
   optional?: boolean;
+  inputMode?: "text" | "numeric" | "tel" | "email" | "search" | "url" | "decimal" | "none";
+  maxLength?: number;
 };
 
 export function TextField({
@@ -17,6 +19,8 @@ export function TextField({
   error,
   type = "text",
   optional,
+  inputMode,
+  maxLength,
 }: TextFieldProps) {
   const { t } = useLanguage();
   return (
@@ -29,6 +33,8 @@ export function TextField({
         id={registration.name}
         type={type}
         placeholder={placeholder}
+        inputMode={inputMode}
+        maxLength={maxLength}
         {...registration}
         className="w-full rounded-2xl border border-sage/70 bg-transparent px-4 py-3 font-sans text-charcoal placeholder:text-charcoal/40 transition-colors focus:border-forest focus:outline-none focus:ring-2 focus:ring-forest/20"
       />
