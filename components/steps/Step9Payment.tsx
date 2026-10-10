@@ -90,7 +90,7 @@ export default function Step9Payment({ onNext, onBack, nextDisabled }: Step9Paym
         <p className="mt-3 text-center font-sans text-xs text-charcoal/60">{t.step9.scanQrLabel}</p>
 
         <div className="mt-5 flex items-center justify-center gap-3">
-          <div>
+          <div className="text-center">
             <p className="font-sans text-xs font-semibold uppercase tracking-[0.2em] text-sage">
               {t.step9.upiLabel}
             </p>

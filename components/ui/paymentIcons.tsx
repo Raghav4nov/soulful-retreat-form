@@ -29,15 +29,18 @@ export function PhonePeIcon() {
   return (
     <svg width="20" height="20" viewBox="0 0 24 24" aria-hidden="true">
       <circle cx="12" cy="12" r="12" fill="#5f259f" />
-      <path
-        fill="none"
-        stroke="#fff"
-        strokeWidth="1.6"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-        d="M8 7.5h7.5a1 1 0 0 1 .7 1.7l-4.4 4.4a1 1 0 0 0 .7 1.7H15"
-      />
-      <path stroke="#fff" strokeWidth="1.6" strokeLinecap="round" d="M10.2 7.5v9.3" />
+      <text
+        x="12"
+        y="12.5"
+        textAnchor="middle"
+        dominantBaseline="central"
+        fontSize="14"
+        fontWeight="700"
+        fontFamily="Arial, Helvetica, sans-serif"
+        fill="#ffffff"
+      >
+        P
+      </text>
     </svg>
   );
 }
@@ -48,14 +51,15 @@ export function PaytmIcon() {
       <rect x="0" y="0" width="24" height="24" rx="6" fill="#00baf2" />
       <text
         x="12"
-        y="16.5"
+        y="12.5"
         textAnchor="middle"
-        fontSize="13"
+        dominantBaseline="central"
+        fontSize="10"
         fontWeight="700"
-        fontFamily="Georgia, serif"
+        fontFamily="Arial, Helvetica, sans-serif"
         fill="#ffffff"
       >
-        ₹
+        Rs
       </text>
     </svg>
   );
