@@ -76,6 +76,7 @@ export interface TranslationDict {
     investmentLabel: string;
     investmentValue: string;
     deluxeUpgradeLabel: string;
+    deluxeAutoIncludedLabel: string;
     deluxeLineLabel: string;
     totalLabel: string;
     includesLabel: string;
@@ -195,6 +196,7 @@ const en: TranslationDict = {
     investmentLabel: "Retreat Investment",
     investmentValue: "₹10,999",
     deluxeUpgradeLabel: "Add Deluxe Room Upgrade (+₹4,000)",
+    deluxeAutoIncludedLabel: "Deluxe Room Upgrade included (Single Occupancy selected)",
     deluxeLineLabel: "Deluxe Room Upgrade",
     totalLabel: "Total Amount",
     includesLabel: "Includes",
@@ -345,6 +347,7 @@ const hi: TranslationDict = {
     investmentLabel: "रिट्रीट निवेश",
     investmentValue: "₹10,999",
     deluxeUpgradeLabel: "डीलक्स रूम अपग्रेड जोड़ें (+₹4,000)",
+    deluxeAutoIncludedLabel: "डीलक्स रूम अपग्रेड शामिल है (एकल आवास चुना गया)",
     deluxeLineLabel: "डीलक्स रूम अपग्रेड",
     totalLabel: "कुल राशि",
     includesLabel: "शामिल है",

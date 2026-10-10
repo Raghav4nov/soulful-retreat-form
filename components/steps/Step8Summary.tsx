@@ -5,7 +5,7 @@ import { PillGroup } from "@/components/ui/PillGroup";
 import { StepHeading } from "@/components/ui/StepHeading";
 import { StepNav } from "@/components/ui/StepNav";
 import { useLanguage } from "@/i18n/LanguageContext";
-import { DELUXE_ROOM_SURCHARGE, formatInr, getTotalPrice } from "@/lib/pricing";
+import { DELUXE_ROOM_SURCHARGE, SINGLE_OCCUPANCY_VALUE, formatInr, getTotalPrice } from "@/lib/pricing";
 
 type Step8SummaryProps = {
   onNext: () => void;
@@ -25,6 +25,7 @@ export default function Step8Summary({ onNext, onBack, nextDisabled }: Step8Summ
   const registrationIntent = watch("registrationIntent");
   const isReady = registrationIntent === "ready";
   const isDeluxe = watch("deluxeRoomUpgrade");
+  const isSingleOccupancy = watch("accommodationPreference") === SINGLE_OCCUPANCY_VALUE;
   const totalPrice = getTotalPrice(isDeluxe);
 
   return (
@@ -43,13 +44,18 @@ export default function Step8Summary({ onNext, onBack, nextDisabled }: Step8Summ
           </p>
           <p className="font-playfair mt-1 text-2xl">{t.step8.investmentValue}</p>
 
-          <label className="mt-4 flex cursor-pointer items-center gap-3 font-sans text-sm text-ivory/90">
+          <label
+            className={`mt-4 flex items-center gap-3 font-sans text-sm text-ivory/90 ${
+              isSingleOccupancy ? "" : "cursor-pointer"
+            }`}
+          >
             <input
               type="checkbox"
+              disabled={isSingleOccupancy}
               {...register("deluxeRoomUpgrade")}
-              className="h-4 w-4 rounded border-ivory/50 accent-ivory focus:ring-ivory/30"
+              className="h-4 w-4 rounded border-ivory/50 accent-ivory focus:ring-ivory/30 disabled:opacity-60"
             />
-            <span>{t.step8.deluxeUpgradeLabel}</span>
+            <span>{isSingleOccupancy ? t.step8.deluxeAutoIncludedLabel : t.step8.deluxeUpgradeLabel}</span>
           </label>
 
           {isDeluxe && (

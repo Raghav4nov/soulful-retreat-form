@@ -4,6 +4,11 @@
 export const BASE_PRICE = 10999;
 export const DELUXE_ROOM_SURCHARGE = 4000;
 
+// Matches the "single" value in ACCOMMODATION_OPTIONS (schema/options.ts).
+// Single occupancy is treated as the Deluxe Room Upgrade - choosing it
+// turns the upgrade on automatically, same surcharge either way.
+export const SINGLE_OCCUPANCY_VALUE = "single";
+
 export function formatInr(amount: number): string {
   return `₹${amount.toLocaleString("en-IN")}`;
 }

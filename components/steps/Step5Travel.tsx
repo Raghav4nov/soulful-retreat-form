@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import { Controller, useFormContext } from "react-hook-form";
 import type { FormValues } from "@/schema/formSchema";
 import {
@@ -12,6 +13,7 @@ import { TextField } from "@/components/ui/TextField";
 import { StepHeading } from "@/components/ui/StepHeading";
 import { StepNav } from "@/components/ui/StepNav";
 import { useLanguage } from "@/i18n/LanguageContext";
+import { SINGLE_OCCUPANCY_VALUE } from "@/lib/pricing";
 
 type Step5TravelProps = {
   onNext: () => void;
@@ -24,11 +26,25 @@ export default function Step5Travel({ onNext, onBack, nextDisabled }: Step5Trave
     control,
     register,
     watch,
+    setValue,
     formState: { errors },
   } = useFormContext<FormValues>();
   const { t, locale } = useLanguage();
 
   const travellingFromOutside = watch("travellingFromOutside");
+  const accommodationPreference = watch("accommodationPreference");
+
+  // Single occupancy always carries the Deluxe Room Upgrade surcharge, so
+  // picking it here turns that upgrade on automatically (and off again if
+  // they switch away) rather than making them separately toggle it later
+  // on the pricing summary.
+  useEffect(() => {
+    if (accommodationPreference === SINGLE_OCCUPANCY_VALUE) {
+      setValue("deluxeRoomUpgrade", true);
+    } else if (accommodationPreference) {
+      setValue("deluxeRoomUpgrade", false);
+    }
+  }, [accommodationPreference, setValue]);
 
   return (
     <div>
