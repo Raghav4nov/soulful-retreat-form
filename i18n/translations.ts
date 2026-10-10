@@ -230,7 +230,7 @@ const en: TranslationDict = {
     payAnyApp: "Any UPI App",
     alreadyPaidLabel: "Already paid? Enter your transaction details below.",
     utrLabel: "Transaction / UTR Number",
-    utrPlaceholder: "Enter the transaction reference",
+    utrPlaceholder: "12-digit number from your payment confirmation",
     agreementLabel: "I confirm my details are accurate and agree to the retreat policies.",
     registerButton: "Register For The Journey →",
   },
@@ -267,6 +267,7 @@ const en: TranslationDict = {
     emergencyNameRequired: "Please enter a name",
     phoneInvalid: "Please enter a valid phone number",
     utrRequired: "Please enter your transaction / UTR number",
+    utrInvalid: "Please enter a valid 12-digit UTR number from your payment confirmation",
     policyRequired: "Please confirm to proceed",
   },
 };
@@ -381,7 +382,7 @@ const hi: TranslationDict = {
     payAnyApp: "कोई भी यूपीआई ऐप",
     alreadyPaidLabel: "भुगतान कर दिया? नीचे अपने लेनदेन का विवरण दर्ज करें।",
     utrLabel: "लेनदेन / यूटीआर नंबर",
-    utrPlaceholder: "लेनदेन संदर्भ दर्ज करें",
+    utrPlaceholder: "आपके भुगतान की पुष्टि से 12-अंकों का नंबर",
     agreementLabel: "यह जानकारी सही है और मैं रिट्रीट की नीतियों से सहमत हूँ।",
     registerButton: "यात्रा के लिए पंजीकरण करें →",
   },
@@ -418,6 +419,7 @@ const hi: TranslationDict = {
     emergencyNameRequired: "कृपया एक नाम दर्ज करें",
     phoneInvalid: "कृपया एक मान्य फ़ोन नंबर दर्ज करें",
     utrRequired: "कृपया अपना लेनदेन / यूटीआर नंबर दर्ज करें",
+    utrInvalid: "कृपया अपने भुगतान की पुष्टि से सही 12-अंकों का यूटीआर नंबर दर्ज करें",
     policyRequired: "आगे बढ़ने के लिए कृपया पुष्टि करें",
   },
 };

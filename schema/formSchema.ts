@@ -14,8 +14,15 @@ export type ValidationMessages = {
   emergencyNameRequired: string;
   phoneInvalid: string;
   utrRequired: string;
+  utrInvalid: string;
   policyRequired: string;
 };
+
+// A real UPI transaction reference (UTR/RRN) is always exactly 12 digits -
+// this won't catch someone typing 12 random digits, but it stops the
+// common case of a placeholder value like "123" or "test" being accepted
+// as a payment reference.
+const utrRegex = /^\d{12}$/;
 
 export function createFormSchema(messages: ValidationMessages) {
   return z
@@ -88,11 +95,18 @@ export function createFormSchema(messages: ValidationMessages) {
       }
 
       if (data.registrationIntent === "ready") {
-        if (!data.utrNumber?.trim()) {
+        const utr = data.utrNumber?.trim() ?? "";
+        if (!utr) {
           ctx.addIssue({
             code: z.ZodIssueCode.custom,
             path: ["utrNumber"],
             message: messages.utrRequired,
+          });
+        } else if (!utrRegex.test(utr)) {
+          ctx.addIssue({
+            code: z.ZodIssueCode.custom,
+            path: ["utrNumber"],
+            message: messages.utrInvalid,
           });
         }
         if (!data.policyAgreement) {
