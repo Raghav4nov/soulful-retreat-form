@@ -186,11 +186,29 @@ function handleAdminUpdate(data) {
   var sheet = SpreadsheetApp.getActiveSpreadsheet().getActiveSheet();
   var headers = sheet.getRange(1, 1, 1, sheet.getLastColumn()).getValues()[0];
 
+  var matchedCount = 0;
   for (var col = 0; col < headers.length; col++) {
     var header = headers[col];
     if (Object.prototype.hasOwnProperty.call(fields, header)) {
       sheet.getRange(rowNumber, col + 1).setValue(fields[header]);
+      matchedCount++;
     }
+  }
+
+  // Without this check, asking to update a field whose header cell
+  // doesn't exist in row 1 yet (e.g. "Follow-up Status" before it's been
+  // added to this sheet) would silently do nothing while still reporting
+  // success - exactly the "dropdown resets after refresh" symptom this
+  // was written to catch.
+  var requestedFields = Object.keys(fields);
+  if (requestedFields.length > 0 && matchedCount === 0) {
+    return jsonResponse({
+      ok: false,
+      error:
+        "None of these fields match a header in row 1: " +
+        requestedFields.join(", ") +
+        ". Add that header cell to the sheet first.",
+    });
   }
 
   return jsonResponse({ ok: true });
