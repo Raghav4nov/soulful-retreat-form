@@ -65,6 +65,24 @@ export function PaytmIcon() {
   );
 }
 
+export function PhonePeWordmark() {
+  return (
+    <span className="font-sans text-sm font-bold">
+      <span className="text-charcoal">Phone</span>
+      <span className="text-[#5f259f]">Pe</span>
+    </span>
+  );
+}
+
+export function PaytmWordmark() {
+  return (
+    <span className="font-sans text-sm font-bold lowercase">
+      <span className="text-[#002e6e]">pay</span>
+      <span className="text-[#00baf2]">tm</span>
+    </span>
+  );
+}
+
 export function GenericUpiIcon() {
   return (
     <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#174D3B" strokeWidth="1.6" aria-hidden="true">

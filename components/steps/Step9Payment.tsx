@@ -9,7 +9,14 @@ import { StepHeading, StepIntro } from "@/components/ui/StepHeading";
 import { StepNav } from "@/components/ui/StepNav";
 import { useLanguage } from "@/i18n/LanguageContext";
 import { formatInr, getTotalPrice } from "@/lib/pricing";
-import { GenericUpiIcon, GooglePayIcon, PaytmIcon, PhonePeIcon } from "@/components/ui/paymentIcons";
+import {
+  GenericUpiIcon,
+  GooglePayIcon,
+  PaytmIcon,
+  PaytmWordmark,
+  PhonePeIcon,
+  PhonePeWordmark,
+} from "@/components/ui/paymentIcons";
 
 // Receiving UPI ID for retreat payments — update here if it ever changes.
 // The amount is computed from the selected accommodation (lib/pricing.ts),
@@ -117,17 +124,19 @@ export default function Step9Payment({ onNext, onBack, nextDisabled }: Step9Paym
             </a>
             <a
               href={upiLinks.phonePe}
-              className="flex items-center justify-center gap-2 rounded-full bg-[#5f259f] px-5 py-3 font-sans text-sm font-semibold text-white"
+              aria-label={t.step9.payPhonePe}
+              className="flex items-center justify-center gap-2 rounded-full border border-sage/50 bg-white px-5 py-3"
             >
               <PhonePeIcon />
-              {t.step9.payPhonePe}
+              <PhonePeWordmark />
             </a>
             <a
               href={upiLinks.paytm}
-              className="flex items-center justify-center gap-2 rounded-full bg-[#00baf2] px-5 py-3 font-sans text-sm font-semibold text-white"
+              aria-label={t.step9.payPaytm}
+              className="flex items-center justify-center gap-2 rounded-full border border-sage/50 bg-white px-5 py-3"
             >
               <PaytmIcon />
-              {t.step9.payPaytm}
+              <PaytmWordmark />
             </a>
             <a
               href={upiLinks.generic}
