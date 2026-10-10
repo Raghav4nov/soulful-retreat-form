@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import Logo from "@/components/ui/Logo";
 import StatCard from "@/components/admin/StatCard";
 import RegistrantDetailModal from "@/components/admin/RegistrantDetailModal";
+import RegistrationsChart from "@/components/admin/RegistrationsChart";
 import {
   FOLLOWUP_STATUS_OPTIONS,
   KNOW_MORE_LABEL,
@@ -17,7 +18,10 @@ import {
   type RegistrantField,
 } from "@/lib/adminFields";
 import { downloadCsv, rowsToCsv } from "@/lib/csv";
+import { formatInr, parseInr } from "@/lib/pricing";
 import { toWhatsAppLink } from "@/lib/whatsapp";
+
+const RESOLVED_FOLLOWUP_STATUSES = new Set(["Confirmed", "Not Interested"]);
 
 const INTENT_FILTER_OPTIONS: { value: string; label: string }[] = [
   { value: READY_TO_REGISTER_LABEL, label: "Ready to Register" },
@@ -64,8 +68,12 @@ export default function AdminDashboardPage() {
   const [error, setError] = useState<string | null>(null);
   const [search, setSearch] = useState("");
   const [intentFilter, setIntentFilter] = useState<string | null>(null);
+  const [needsFollowUpOnly, setNeedsFollowUpOnly] = useState(false);
   const [sort, setSort] = useState<SortState>({ column: "Submitted At", direction: "desc" });
   const [selected, setSelected] = useState<Registrant | null>(null);
+  const [selectedRows, setSelectedRows] = useState<Set<number>>(new Set());
+  const [bulkStatus, setBulkStatus] = useState("");
+  const [bulkApplying, setBulkApplying] = useState(false);
 
   useEffect(() => {
     let cancelled = false;
@@ -127,6 +135,15 @@ export default function AdminDashboardPage() {
     }
   }
 
+  function toggleRowSelected(row: number) {
+    setSelectedRows((prev) => {
+      const next = new Set(prev);
+      if (next.has(row)) next.delete(row);
+      else next.add(row);
+      return next;
+    });
+  }
+
   async function handleLogout() {
     await fetch("/api/admin/logout", { method: "POST" });
     router.push("/admin/login");
@@ -157,10 +174,15 @@ export default function AdminDashboardPage() {
     if (intentFilter) {
       rows = rows.filter((registrant) => registrant["Registration Intent"] === intentFilter);
     }
+    if (needsFollowUpOnly) {
+      rows = rows.filter(
+        (registrant) => !RESOLVED_FOLLOWUP_STATUSES.has(registrant["Follow-up Status"] || "")
+      );
+    }
 
     const sorted = [...rows].sort((a, b) => compareByColumn(a, b, sort.column));
     return sort.direction === "asc" ? sorted : sorted.reverse();
-  }, [registrants, search, intentFilter, sort]);
+  }, [registrants, search, intentFilter, needsFollowUpOnly, sort]);
 
   const stats = useMemo(() => {
     const rows = registrants ?? [];
@@ -171,6 +193,42 @@ export default function AdminDashboardPage() {
       speakTeam: rows.filter((r) => r["Registration Intent"] === SPEAK_TEAM_LABEL).length,
     };
   }, [registrants]);
+
+  const revenue = useMemo(() => {
+    const readyRows = (registrants ?? []).filter(
+      (r) => r["Registration Intent"] === READY_TO_REGISTER_LABEL
+    );
+    const collected = readyRows
+      .filter((r) => r["Follow-up Status"] === "Confirmed")
+      .reduce((sum, r) => sum + parseInr(r["Amount Due"]), 0);
+    const pending = readyRows
+      .filter((r) => !RESOLVED_FOLLOWUP_STATUSES.has(r["Follow-up Status"] || ""))
+      .reduce((sum, r) => sum + parseInr(r["Amount Due"]), 0);
+    return { collected, pending };
+  }, [registrants]);
+
+  function toggleSelectAllVisible() {
+    const visibleRows = filtered.map((r) => r._row);
+    const allSelected = visibleRows.length > 0 && visibleRows.every((row) => selectedRows.has(row));
+    setSelectedRows(allSelected ? new Set() : new Set(visibleRows));
+  }
+
+  async function handleBulkApply() {
+    if (!bulkStatus || selectedRows.size === 0) return;
+    setBulkApplying(true);
+    setError(null);
+    const rows = Array.from(selectedRows);
+    const results = await Promise.allSettled(
+      rows.map((row) => handleSave(row, { "Follow-up Status": bulkStatus === "pending" ? "" : bulkStatus }))
+    );
+    const failures = results.filter((result) => result.status === "rejected").length;
+    if (failures > 0) {
+      setError(`Failed to update ${failures} of ${rows.length} selected registrant(s).`);
+    }
+    setSelectedRows(new Set());
+    setBulkStatus("");
+    setBulkApplying(false);
+  }
 
   function handleExportCsv() {
     if (!registrants) return;
@@ -223,6 +281,15 @@ export default function AdminDashboardPage() {
           <StatCard label="Wants to Speak with Team" value={stats.speakTeam} />
         </div>
 
+        <div className="mt-4 grid grid-cols-2 gap-4">
+          <StatCard label="Revenue Collected" value={formatInr(revenue.collected)} highlight />
+          <StatCard label="Revenue Pending" value={formatInr(revenue.pending)} />
+        </div>
+
+        <div className="mt-6">
+          <RegistrationsChart registrants={registrants ?? []} />
+        </div>
+
         <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
           <input
             type="text"
@@ -263,12 +330,64 @@ export default function AdminDashboardPage() {
               {option.label}
             </button>
           ))}
+          <button
+            type="button"
+            onClick={() => setNeedsFollowUpOnly((prev) => !prev)}
+            className={`rounded-full px-4 py-1.5 font-sans text-xs font-semibold ${
+              needsFollowUpOnly ? "bg-forest text-ivory" : "border border-sage/40 text-charcoal"
+            }`}
+          >
+            Needs Follow-up
+          </button>
         </div>
+
+        {selectedRows.size > 0 && (
+          <div className="mt-4 flex flex-wrap items-center gap-3 rounded-xl border border-forest/30 bg-forest/5 px-4 py-3">
+            <span className="font-sans text-sm text-charcoal">{selectedRows.size} selected</span>
+            <select
+              value={bulkStatus}
+              onChange={(event) => setBulkStatus(event.target.value)}
+              className="rounded-lg border border-sage/40 bg-white px-3 py-1.5 font-sans text-sm text-charcoal outline-none focus:border-forest"
+            >
+              <option value="">Set status to…</option>
+              <option value="pending">Pending</option>
+              {FOLLOWUP_STATUS_OPTIONS.map((option) => (
+                <option key={option} value={option}>
+                  {option}
+                </option>
+              ))}
+            </select>
+            <button
+              type="button"
+              onClick={handleBulkApply}
+              disabled={!bulkStatus || bulkApplying}
+              className="rounded-full bg-forest px-4 py-1.5 font-sans text-sm font-semibold text-ivory disabled:opacity-50"
+            >
+              {bulkApplying ? "Applying…" : "Apply"}
+            </button>
+            <button
+              type="button"
+              onClick={() => setSelectedRows(new Set())}
+              className="font-sans text-sm text-charcoal/60 hover:text-charcoal"
+            >
+              Clear
+            </button>
+          </div>
+        )}
 
         <div className="mt-6 overflow-x-auto rounded-2xl border border-sage/30 bg-white">
           <table className="w-full min-w-[720px] text-left">
             <thead>
               <tr className="border-b border-sage/30">
+                <th className="w-10 px-4 py-3">
+                  <input
+                    type="checkbox"
+                    checked={filtered.length > 0 && filtered.every((r) => selectedRows.has(r._row))}
+                    onChange={toggleSelectAllVisible}
+                    className="h-4 w-4 rounded border-sage accent-forest"
+                    aria-label="Select all visible registrants"
+                  />
+                </th>
                 {TABLE_COLUMNS.map((column) => {
                   const isSortable = (SORTABLE_COLUMNS as readonly string[]).includes(column);
                   const isActive = sort.column === column;
@@ -299,13 +418,13 @@ export default function AdminDashboardPage() {
             <tbody>
               {registrants === null ? (
                 <tr>
-                  <td colSpan={TABLE_COLUMNS.length} className="px-4 py-8 text-center font-sans text-sm text-charcoal/50">
+                  <td colSpan={TABLE_COLUMNS.length + 1} className="px-4 py-8 text-center font-sans text-sm text-charcoal/50">
                     Loading registrations...
                   </td>
                 </tr>
               ) : filtered.length === 0 ? (
                 <tr>
-                  <td colSpan={TABLE_COLUMNS.length} className="px-4 py-8 text-center font-sans text-sm text-charcoal/50">
+                  <td colSpan={TABLE_COLUMNS.length + 1} className="px-4 py-8 text-center font-sans text-sm text-charcoal/50">
                     No registrations found.
                   </td>
                 </tr>
@@ -318,6 +437,15 @@ export default function AdminDashboardPage() {
                       onClick={() => setSelected(registrant)}
                       className="cursor-pointer border-b border-sage/15 last:border-0 hover:bg-sage/10"
                     >
+                      <td className="px-4 py-3" onClick={(event) => event.stopPropagation()}>
+                        <input
+                          type="checkbox"
+                          checked={selectedRows.has(registrant._row)}
+                          onChange={() => toggleRowSelected(registrant._row)}
+                          className="h-4 w-4 rounded border-sage accent-forest"
+                          aria-label={`Select ${registrant["Full Name"] || "registrant"}`}
+                        />
+                      </td>
                       {TABLE_COLUMNS.map((column) => (
                         <td key={column} className="px-4 py-3 font-sans text-sm text-charcoal">
                           {column === "Submitted At" ? (
