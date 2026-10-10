@@ -9,6 +9,7 @@ import { StepHeading, StepIntro } from "@/components/ui/StepHeading";
 import { StepNav } from "@/components/ui/StepNav";
 import { useLanguage } from "@/i18n/LanguageContext";
 import { formatInr, getTotalPrice } from "@/lib/pricing";
+import { GenericUpiIcon, GooglePayIcon, PaytmIcon, PhonePeIcon } from "@/components/ui/paymentIcons";
 
 // Receiving UPI ID for retreat payments — update here if it ever changes.
 // The amount is computed from the selected accommodation (lib/pricing.ts),
@@ -17,7 +18,7 @@ const UPI_VPA = "parmanandpriyanka@ybl";
 const UPI_PAYEE_NAME = "Soulful Healing Adventure";
 const UPI_NOTE = "Soulful Healing Adventure Registration";
 
-function buildUpiLink(scheme: string, amount: number): string {
+function buildUpiLink(schemeAndPath: string, amount: number): string {
   const params = new URLSearchParams({
     pa: UPI_VPA,
     pn: UPI_PAYEE_NAME,
@@ -25,7 +26,7 @@ function buildUpiLink(scheme: string, amount: number): string {
     cu: "INR",
     tn: UPI_NOTE,
   });
-  return `${scheme}://pay?${params.toString()}`;
+  return `${schemeAndPath}?${params.toString()}`;
 }
 
 type Step9PaymentProps = {
@@ -47,10 +48,14 @@ export default function Step9Payment({ onNext, onBack, nextDisabled }: Step9Paym
 
   const upiLinks = useMemo(
     () => ({
-      generic: buildUpiLink("upi", totalPrice),
-      gpay: buildUpiLink("tez", totalPrice),
-      phonePe: buildUpiLink("phonepe", totalPrice),
-      paytm: buildUpiLink("paytmmp", totalPrice),
+      generic: buildUpiLink("upi://pay", totalPrice),
+      // Google Pay's registered deep-link path is "tez://upi/pay" - the
+      // extra "/upi/" segment matters, unlike PhonePe/Paytm below. Without
+      // it Android has no app registered for the link and the tap does
+      // nothing.
+      gpay: buildUpiLink("tez://upi/pay", totalPrice),
+      phonePe: buildUpiLink("phonepe://pay", totalPrice),
+      paytm: buildUpiLink("paytmmp://pay", totalPrice),
     }),
     [totalPrice]
   );
@@ -105,26 +110,30 @@ export default function Step9Payment({ onNext, onBack, nextDisabled }: Step9Paym
           <div className="mt-3 flex flex-col gap-3">
             <a
               href={upiLinks.gpay}
-              className="rounded-full border border-sage/50 bg-white px-5 py-3 text-center font-sans text-sm font-semibold text-charcoal"
+              className="flex items-center justify-center gap-2 rounded-full border border-sage/50 bg-white px-5 py-3 font-sans text-sm font-semibold text-charcoal"
             >
+              <GooglePayIcon />
               {t.step9.payGpay}
             </a>
             <a
               href={upiLinks.phonePe}
-              className="rounded-full bg-[#5f259f] px-5 py-3 text-center font-sans text-sm font-semibold text-white"
+              className="flex items-center justify-center gap-2 rounded-full bg-[#5f259f] px-5 py-3 font-sans text-sm font-semibold text-white"
             >
+              <PhonePeIcon />
               {t.step9.payPhonePe}
             </a>
             <a
               href={upiLinks.paytm}
-              className="rounded-full bg-[#00baf2] px-5 py-3 text-center font-sans text-sm font-semibold text-white"
+              className="flex items-center justify-center gap-2 rounded-full bg-[#00baf2] px-5 py-3 font-sans text-sm font-semibold text-white"
             >
+              <PaytmIcon />
               {t.step9.payPaytm}
             </a>
             <a
               href={upiLinks.generic}
-              className="rounded-full border border-forest/40 px-5 py-3 text-center font-sans text-sm font-semibold text-forest"
+              className="flex items-center justify-center gap-2 rounded-full border border-forest/40 px-5 py-3 font-sans text-sm font-semibold text-forest"
             >
+              <GenericUpiIcon />
               {t.step9.payAnyApp}
             </a>
           </div>
