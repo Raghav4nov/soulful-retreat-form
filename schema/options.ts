@@ -86,22 +86,14 @@ export const TRAVEL_GUIDANCE_OPTIONS: Option[] = [
 // Each option's price lives in lib/pricing.ts (ACCOMMODATION_PRICES), keyed
 // by the same "value" below. Step5Travel shows the price next to each pill
 // without baking it into the label, so the submitted/sheet value stays a
-// clean room-type name. Meals are included with every tier, so every label
-// says so consistently (not just one, which would imply the others don't).
+// clean room-type name. Meals are included with every tier - that's said
+// once on the "Accommodation preference" field label (i18n step5), not
+// repeated on each option here.
 export const ACCOMMODATION_OPTIONS: Option[] = [
-  { value: "dormitory", label: { en: "Dormitory (meal included)", hi: "डॉर्मिट्री (भोजन सहित)" } },
-  {
-    value: "triple",
-    label: { en: "Triple sharing room (meal included)", hi: "ट्रिपल शेयरिंग रूम (भोजन सहित)" },
-  },
-  {
-    value: "double",
-    label: { en: "Double sharing room (meal included)", hi: "डबल शेयरिंग रूम (भोजन सहित)" },
-  },
-  {
-    value: "single",
-    label: { en: "Single occupancy (meal included)", hi: "एकल आवास (भोजन सहित)" },
-  },
+  { value: "dormitory", label: { en: "Dormitory", hi: "डॉर्मिट्री" } },
+  { value: "triple", label: { en: "Triple sharing room", hi: "ट्रिपल शेयरिंग रूम" } },
+  { value: "double", label: { en: "Double sharing room", hi: "डबल शेयरिंग रूम" } },
+  { value: "single", label: { en: "Single occupancy", hi: "एकल आवास" } },
 ];
 
 // Step 6
