@@ -88,7 +88,7 @@ export const TRAVEL_GUIDANCE_OPTIONS: Option[] = [
 // without baking it into the label, so the submitted/sheet value stays a
 // clean room-type name.
 export const ACCOMMODATION_OPTIONS: Option[] = [
-  { value: "dormitory", label: { en: "Dormitory with meal", hi: "भोजन सहित डॉर्मिट्री" } },
+  { value: "dormitory", label: { en: "Dormitory", hi: "डॉर्मिट्री" } },
   { value: "triple", label: { en: "Triple sharing room", hi: "ट्रिपल शेयरिंग रूम" } },
   { value: "double", label: { en: "Double sharing room", hi: "डबल शेयरिंग रूम" } },
   { value: "single", label: { en: "Single occupancy", hi: "एकल आवास" } },
