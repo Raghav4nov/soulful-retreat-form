@@ -98,9 +98,7 @@ export default function Step5Travel({ onNext, onBack, nextDisabled }: Step5Trave
           <p className="font-sans text-xs text-charcoal/60">{t.step5.accommodationPriceNote}</p>
           {localizeOptions(ACCOMMODATION_OPTIONS, locale).map((option) => (
             <div key={option.value} className="flex items-center justify-between font-sans text-sm">
-              {/* "(meal included)" is already said once in the note above - drop
-                  it here so the room-type name doesn't wrap onto a second line. */}
-              <span className="text-charcoal">{option.label.replace(/\s*\(.*\)$/, "")}</span>
+              <span className="text-charcoal">{option.label}</span>
               <span className="font-semibold text-forest">{formatInr(ACCOMMODATION_PRICES[option.value])}</span>
             </div>
           ))}
