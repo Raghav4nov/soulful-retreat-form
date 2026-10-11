@@ -34,19 +34,24 @@ var HEADERS = [
   "Emergency Relationship",
   "Activity Notes",
   "Registration Intent",
-  "Deluxe Room Upgrade",
   "Amount Due",
   "UTR Number",
   "Policy Agreement",
   "Follow-up Status",
 ];
 
-// "Follow-up Status", "Deluxe Room Upgrade" and "Amount Due" are each new
-// at different points, so none of them exist yet on an older sheet. If
-// your sheet already has rows, add each missing header yourself as a new
-// column in row 1 (any position - doPost/handleAdminList/handleAdminUpdate
-// all match columns by header name, not position) and values will start
-// landing there immediately, no other change needed.
+// "Follow-up Status" and "Amount Due" were each added after this sheet was
+// first created, so neither exists yet on an older sheet. If your sheet
+// already has rows, add each missing header yourself as a new column in
+// row 1 (any position - doPost/handleAdminList/handleAdminUpdate all match
+// columns by header name, not position) and values will start landing
+// there immediately, no other change needed.
+//
+// "Deluxe Room Upgrade" was removed - accommodation is now priced per room
+// type instead of a flat price plus an optional surcharge (see
+// "Accommodation" and "Amount Due"). If your sheet still has a "Deluxe Room
+// Upgrade" column from before, it's safe to leave it or delete it - this
+// script no longer writes to it either way.
 
 var READY_TO_REGISTER_LABEL = "I'm ready to register";
 
@@ -104,7 +109,6 @@ function doPost(e) {
       "Emergency Relationship": data.emergencyRelationship || "",
       "Activity Notes": data.activityNotes || "",
       "Registration Intent": data.registrationIntent || "",
-      "Deluxe Room Upgrade": data.deluxeRoomUpgrade || "",
       "Amount Due": data.amountDue || "",
       "UTR Number": data.utrNumber || "",
       "Policy Agreement": data.policyAgreement || "",

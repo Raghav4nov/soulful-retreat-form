@@ -83,18 +83,15 @@ export const TRAVEL_GUIDANCE_OPTIONS: Option[] = [
   { value: "maybe", label: { en: "Maybe", hi: "शायद" } },
 ];
 
+// Each option's price lives in lib/pricing.ts (ACCOMMODATION_PRICES), keyed
+// by the same "value" below. Step5Travel shows the price next to each pill
+// without baking it into the label, so the submitted/sheet value stays a
+// clean room-type name.
 export const ACCOMMODATION_OPTIONS: Option[] = [
+  { value: "dormitory", label: { en: "Dormitory with meal", hi: "भोजन सहित डॉर्मिट्री" } },
+  { value: "triple", label: { en: "Triple sharing room", hi: "ट्रिपल शेयरिंग रूम" } },
+  { value: "double", label: { en: "Double sharing room", hi: "डबल शेयरिंग रूम" } },
   { value: "single", label: { en: "Single occupancy", hi: "एकल आवास" } },
-  { value: "twin", label: { en: "Twin sharing", hi: "ट्विन शेयरिंग" } },
-  { value: "triple", label: { en: "Triple sharing", hi: "ट्रिपल शेयरिंग" } },
-  {
-    value: "none",
-    label: { en: "I don't need accommodation", hi: "मुझे आवास की आवश्यकता नहीं है" },
-  },
-  {
-    value: "tell_me_options",
-    label: { en: "Please tell me the available options", hi: "कृपया उपलब्ध विकल्प बताएं" },
-  },
 ];
 
 // Step 6

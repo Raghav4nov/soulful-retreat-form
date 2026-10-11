@@ -48,6 +48,7 @@ export interface TranslationDict {
     travelModeQuestion: string;
     travelGuidanceQuestion: string;
     accommodationLabel: string;
+    accommodationPriceNote: string;
     companionLabel: string;
     companionPlaceholder: string;
   };
@@ -74,11 +75,6 @@ export interface TranslationDict {
   step8: {
     heading: string;
     investmentLabel: string;
-    investmentValue: string;
-    deluxeUpgradeLabel: string;
-    deluxeAutoIncludedLabel: string;
-    deluxeLineLabel: string;
-    totalLabel: string;
     includesLabel: string;
     includes: string[];
     notIncludedLabel: string;
@@ -167,6 +163,7 @@ const en: TranslationDict = {
     travelModeQuestion: "How will you be reaching Rishikesh?",
     travelGuidanceQuestion: "Would you like guidance regarding reaching the retreat location?",
     accommodationLabel: "Accommodation preference",
+    accommodationPriceNote: "Price per person, for the full two-day retreat",
     companionLabel: "If you're coming with someone, please mention their name",
     companionPlaceholder: "Companion's name",
   },
@@ -194,11 +191,6 @@ const en: TranslationDict = {
   step8: {
     heading: "Your Place In The Journey",
     investmentLabel: "Retreat Investment",
-    investmentValue: "₹10,999",
-    deluxeUpgradeLabel: "Add Deluxe Room Upgrade (+₹4,000)",
-    deluxeAutoIncludedLabel: "Deluxe Room Upgrade included (Single Occupancy selected)",
-    deluxeLineLabel: "Deluxe Room Upgrade",
-    totalLabel: "Total Amount",
     includesLabel: "Includes",
     includes: [
       "Accommodation",
@@ -319,6 +311,7 @@ const hi: TranslationDict = {
     travelModeQuestion: "आप ऋषिकेश कैसे पहुँचेंगे?",
     travelGuidanceQuestion: "क्या आपको रिट्रीट स्थान तक पहुँचने के बारे में मार्गदर्शन चाहिए?",
     accommodationLabel: "आवास प्राथमिकता",
+    accommodationPriceNote: "पूरे दो-दिवसीय रिट्रीट के लिए प्रति व्यक्ति मूल्य",
     companionLabel: "यदि आप किसी के साथ आ रहे हैं, तो कृपया उनका नाम बताएं",
     companionPlaceholder: "साथी का नाम",
   },
@@ -346,11 +339,6 @@ const hi: TranslationDict = {
   step8: {
     heading: "इस यात्रा में आपका स्थान",
     investmentLabel: "रिट्रीट निवेश",
-    investmentValue: "₹10,999",
-    deluxeUpgradeLabel: "डीलक्स रूम अपग्रेड जोड़ें (+₹4,000)",
-    deluxeAutoIncludedLabel: "डीलक्स रूम अपग्रेड शामिल है (एकल आवास चुना गया)",
-    deluxeLineLabel: "डीलक्स रूम अपग्रेड",
-    totalLabel: "कुल राशि",
     includesLabel: "शामिल है",
     includes: [
       "आवास",
