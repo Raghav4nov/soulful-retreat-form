@@ -62,7 +62,6 @@ export function createFormSchema(messages: ValidationMessages) {
 
       // Step 8 — Registration summary
       registrationIntent: z.string().min(1, messages.selectOption),
-      deluxeRoomUpgrade: z.boolean().optional(),
 
       // Step 9 — Payment
       utrNumber: z.string().optional(),
@@ -145,7 +144,6 @@ export const defaultValues: FormValues = {
   emergencyRelationship: "",
   activityNotes: "",
   registrationIntent: "",
-  deluxeRoomUpgrade: false,
   utrNumber: "",
   policyAgreement: false,
 };

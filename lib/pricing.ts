@@ -1,13 +1,17 @@
-// Single source of truth for retreat pricing. Update the two numbers below
-// to change prices everywhere they're shown (registration flow, landing
-// page, payment QR/links, and the submitted "Amount Due" sheet column).
-export const BASE_PRICE = 10999;
-export const DELUXE_ROOM_SURCHARGE = 4000;
+// Single source of truth for retreat pricing. The total is driven entirely
+// by the chosen accommodation type - update the map below to change prices
+// everywhere they're shown (registration flow, landing page, payment
+// QR/links, and the submitted "Amount Due" sheet column).
+// Keys match the "value" fields in ACCOMMODATION_OPTIONS (schema/options.ts).
+export const ACCOMMODATION_PRICES: Record<string, number> = {
+  dormitory: 10999,
+  triple: 14999,
+  double: 15999,
+  single: 19999,
+};
 
-// Matches the "single" value in ACCOMMODATION_OPTIONS (schema/options.ts).
-// Single occupancy is treated as the Deluxe Room Upgrade - choosing it
-// turns the upgrade on automatically, same surcharge either way.
-export const SINGLE_OCCUPANCY_VALUE = "single";
+export const LOWEST_PRICE = Math.min(...Object.values(ACCOMMODATION_PRICES));
+export const HIGHEST_PRICE = Math.max(...Object.values(ACCOMMODATION_PRICES));
 
 export function formatInr(amount: number): string {
   return `₹${amount.toLocaleString("en-IN")}`;
@@ -21,6 +25,7 @@ export function parseInr(formatted: string | undefined): number {
   return digits ? parseInt(digits, 10) : 0;
 }
 
-export function getTotalPrice(hasDeluxeUpgrade: boolean | undefined): number {
-  return hasDeluxeUpgrade ? BASE_PRICE + DELUXE_ROOM_SURCHARGE : BASE_PRICE;
+export function getTotalPrice(accommodationPreference: string | undefined): number {
+  if (!accommodationPreference) return 0;
+  return ACCOMMODATION_PRICES[accommodationPreference] ?? 0;
 }

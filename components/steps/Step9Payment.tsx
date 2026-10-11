@@ -51,7 +51,7 @@ export default function Step9Payment({ onNext, onBack, nextDisabled }: Step9Paym
   const { t } = useLanguage();
   const [copied, setCopied] = useState(false);
 
-  const totalPrice = getTotalPrice(watch("deluxeRoomUpgrade"));
+  const totalPrice = getTotalPrice(watch("accommodationPreference"));
 
   const upiLinks = useMemo(
     () => ({

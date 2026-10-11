@@ -1,4 +1,3 @@
-import { useEffect } from "react";
 import { Controller, useFormContext } from "react-hook-form";
 import type { FormValues } from "@/schema/formSchema";
 import {
@@ -13,7 +12,7 @@ import { TextField } from "@/components/ui/TextField";
 import { StepHeading } from "@/components/ui/StepHeading";
 import { StepNav } from "@/components/ui/StepNav";
 import { useLanguage } from "@/i18n/LanguageContext";
-import { SINGLE_OCCUPANCY_VALUE } from "@/lib/pricing";
+import { ACCOMMODATION_PRICES, formatInr } from "@/lib/pricing";
 
 type Step5TravelProps = {
   onNext: () => void;
@@ -26,25 +25,11 @@ export default function Step5Travel({ onNext, onBack, nextDisabled }: Step5Trave
     control,
     register,
     watch,
-    setValue,
     formState: { errors },
   } = useFormContext<FormValues>();
   const { t, locale } = useLanguage();
 
   const travellingFromOutside = watch("travellingFromOutside");
-  const accommodationPreference = watch("accommodationPreference");
-
-  // Single occupancy always carries the Deluxe Room Upgrade surcharge, so
-  // picking it here turns that upgrade on automatically (and off again if
-  // they switch away) rather than making them separately toggle it later
-  // on the pricing summary.
-  useEffect(() => {
-    if (accommodationPreference === SINGLE_OCCUPANCY_VALUE) {
-      setValue("deluxeRoomUpgrade", true);
-    } else if (accommodationPreference) {
-      setValue("deluxeRoomUpgrade", false);
-    }
-  }, [accommodationPreference, setValue]);
 
   return (
     <div>
@@ -108,6 +93,16 @@ export default function Step5Travel({ onNext, onBack, nextDisabled }: Step5Trave
             />
           )}
         />
+
+        <div className="-mt-4 flex flex-col gap-1.5 rounded-2xl bg-sage/10 p-4">
+          <p className="font-sans text-xs text-charcoal/60">{t.step5.accommodationPriceNote}</p>
+          {localizeOptions(ACCOMMODATION_OPTIONS, locale).map((option) => (
+            <div key={option.value} className="flex items-center justify-between font-sans text-sm">
+              <span className="text-charcoal">{option.label}</span>
+              <span className="font-semibold text-forest">{formatInr(ACCOMMODATION_PRICES[option.value])}</span>
+            </div>
+          ))}
+        </div>
 
         <TextField
           label={t.step5.companionLabel}

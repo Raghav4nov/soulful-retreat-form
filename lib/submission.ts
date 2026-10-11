@@ -51,8 +51,7 @@ export function buildSubmissionPayload(data: FormValues) {
     emergencyRelationship: labelFor(RELATIONSHIP_OPTIONS, data.emergencyRelationship),
     activityNotes: data.activityNotes || "",
     registrationIntent: labelFor(REGISTRATION_INTENT_OPTIONS, data.registrationIntent),
-    deluxeRoomUpgrade: data.deluxeRoomUpgrade ? "Yes" : "No",
-    amountDue: formatInr(getTotalPrice(data.deluxeRoomUpgrade)),
+    amountDue: formatInr(getTotalPrice(data.accommodationPreference)),
     utrNumber: data.utrNumber || "",
     policyAgreement: data.policyAgreement ? "Yes" : "No",
   };
