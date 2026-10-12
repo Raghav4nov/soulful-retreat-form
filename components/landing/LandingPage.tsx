@@ -153,6 +153,19 @@ export default function LandingPage() {
           </Reveal>
         </section>
 
+        {/* Landscape promo video - desktop only, a 9:16/narrow player would look cramped on mobile */}
+        <section className="hidden px-6 lg:block">
+          <Reveal>
+            <video
+              className="mx-auto w-full max-w-5xl rounded-3xl border border-sage/40 shadow-sm"
+              controls
+              preload="metadata"
+            >
+              <source src="/Soulful-Healing-Adventure.mp4" type="video/mp4" />
+            </video>
+          </Reveal>
+        </section>
+
         <section className="mx-auto max-w-2xl px-6 py-20 text-center">
           <Reveal>
             <div className="rounded-3xl border border-sage/40 bg-white/40 p-10 sm:p-14">
